@@ -133,3 +133,8 @@ input[type=number] {
 button{
   cursor: pointer;
 }
+
+::placeholder{
+  opacity: .7;
+  font-weight: 300;
+}

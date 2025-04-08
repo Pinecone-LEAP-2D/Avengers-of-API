@@ -6,7 +6,7 @@ export default function Home() {
   return (
     <div className="flex flex-col items-center">
       <Header />
-      <div className="flex mt-[60px] gap-[300px]">
+      <div className="flex mt-[60px] gap-[100px]">
         <NavBar location={"home"} />
         <HomeMenu />
       </div>

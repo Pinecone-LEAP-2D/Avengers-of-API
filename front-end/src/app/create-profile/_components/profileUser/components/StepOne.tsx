@@ -38,7 +38,7 @@ export const StepOneProfileEdit = ({ setStep }: StepOneProfileEditProps) => {
 
   return (
     <div className="flex items-center justify-center min-h-screen">
-      <div className="w-[510px] h-[631px] max-w-[672px] m-auto flex flex-col gap-6 p-6 border rounded-xl shadow-md">
+      <div className="w-[510px] h-fit max-w-[672px] m-auto flex flex-col gap-6 p-6 border rounded-xl shadow-md">
         <Formik
           initialValues={{ name: "", about: "", media: null }}
           validationSchema={profileSchema}
@@ -51,13 +51,13 @@ export const StepOneProfileEdit = ({ setStep }: StepOneProfileEditProps) => {
                   Complete your profile page
                 </h1>
                 <h2 className="mb-2">Add photo</h2>
-                <div className="w-[160px] h-[160px] flex items-center justify-center border-dotted border-2 rounded-full mb-4">
+                <div className="w-[160px] h-[160px] flex items-center justify-center border-dotted border-2 rounded-full overflow-hidden mb-4">
                   <Input
                     id="media"
                     name="media"
                     type="file"
                     accept="image/*"
-                    className="hidden"
+                    className="opacity- absolute w-[160px] h-[160px] rounded-full cursor-pointer"
                     onChange={(event) => {
                       const file = event.currentTarget.files?.[0] || null;
                       setFieldValue("media", file);
@@ -66,7 +66,7 @@ export const StepOneProfileEdit = ({ setStep }: StepOneProfileEditProps) => {
                       }
                     }}
                   />
-                  <label htmlFor="media" className="cursor-pointer">
+                  <label htmlFor="media">
                     {preview ? (
                       <img
                         src={preview}
@@ -78,6 +78,7 @@ export const StepOneProfileEdit = ({ setStep }: StepOneProfileEditProps) => {
                     )}
                   </label>
                 </div>
+                <ErrorMessage name="media" component="div" className="text-red-700 text-sm"/>
               </div>
               <div>
                 <h2 className="mb-1">Name</h2>
@@ -95,7 +96,8 @@ export const StepOneProfileEdit = ({ setStep }: StepOneProfileEditProps) => {
                   name="about"
                   as={Input}
                   placeholder="Write about yourself"
-                  className="h-[130px] w-full text-start align-top p-3 border rounded-md resize-none"
+                  component="textarea"
+                  className="w-full p-3 border rounded-md resize-none"
                 />
                 <ErrorMessage
                   name="about"
