@@ -21,10 +21,10 @@ export default function User() {
   const params = useParams();
   const { userID } = params;
 
-  const changeCoffeeAmount = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const changeCoffeeAmount = (e:React.ChangeEvent<HTMLInputElement>) => {
     setCoffeeCount(Number(e.target.value));
   };
-  const changeToMonthly = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const changeToMonthly = (e:React.ChangeEvent<HTMLInputElement>) => {
     setIsMonthly(e.target.checked);
   };
 
@@ -43,7 +43,7 @@ export default function User() {
               <div className="w-[30px] h-[30px] rounded-full overflow-hidden">
                 <img src={user.pfp} className="w-full h-full object-cover" />
               </div>
-              <div className="text-[22px] font-semibold">{user.username}</div>
+              <div className="font-[22px] font-semibold">{user.username}</div>
             </div>
             <div className="flex flex-col py-[20px] gap-[20px]">
               <div className="font-semibold text-[19px]">
@@ -152,44 +152,16 @@ export default function User() {
             />
           </div>
           <div className="mt-[20px] flex gap-[5px] items-center">
-            <input
-              type="checkbox"
-              checked={isMonthly}
-              onChange={changeToMonthly}
-              className="w-[17px] h-[17px] opacity-0 absolute"
-            />
-            <div
-              className={`w-[17px] h-[17px] rounded-sm border flex items-center justify-center transition-colors duration-150 ease-in-out ${
-                isMonthly
-                  ? "bg-orange-400 border-orange-400"
-                  : "bg-white border-gray-400"
-              }`}
-              role="checkbox"
-              aria-checked={isMonthly}
-            >
+            <input type="checkbox" checked={isMonthly} onChange={changeToMonthly} className="w-[17px] h-[17px] opacity-0 absolute"/>
+            <div className={`w-[17px] h-[17px] rounded-sm border flex items-center justify-center transition-colors duration-150 ease-in-out ${isMonthly ? "bg-orange-400 border-orange-400" : "bg-white border-gray-400"}`} role="checkbox" aria-checked={isMonthly}>
               {isMonthly && (
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  strokeWidth={3.5}
-                  stroke="currentColor"
-                  className="w-[10px] h-[10px] text-white"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    d="M4.5 12.75l6 6 9-13.5"
-                  />
-                </svg>
-              )}
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={3.5} stroke="currentColor" className="w-[10px] h-[10px] text-white">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 12.75l6 6 9-13.5"/>
+                </svg>)}
             </div>
             <div>Make this monthly</div>
           </div>
-          <button className="bg-orange-400 text-white rounded-full w-full h-[40px] font-semibold mt-[20px]">
-            Support ${5 * coffeeCount}
-            {isMonthly && " / month"}
-          </button>
+          <button className="bg-orange-400 text-white rounded-full w-full h-[40px] font-semibold mt-[20px]">Support ${5 * coffeeCount}{isMonthly && " / month"}</button>
         </div>
       </div>
     </div>
