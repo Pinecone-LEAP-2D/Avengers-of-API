@@ -1,11 +1,10 @@
 import * as Yup from "yup";
 import { object, string } from "yup";
-import { z } from "zod";
 
 export let profileSchema = object({
-  name: string().min(6).required(),
-  about: string().min(6).required(),
-  media: string().min(8).required(),
+  name: string().min(6,"Use at least 6 character").required("Name is required"),
+  about: string().min(6,"Use at least 6 character").required("Can't be blank"),
+  media: string().required("Please upload profile picture"),
 });
 
 export const secondProfileSchema = Yup.object({
