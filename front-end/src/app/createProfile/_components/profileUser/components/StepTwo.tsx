@@ -8,11 +8,10 @@ import { CountryDrop } from "./countryDrop";
 export const StepTwoProfileEdit = () => {
   const router = useRouter();
 
-  // Handle form submission
   const handleSubmit = async (values: any) => {
-    console.log(values); // Log the form data (you can handle it further here, like making an API call)
-    localStorage.setItem("step", "3"); // Move to step 3 or final page
-    router.push("/next-step"); // Optionally navigate to another page
+    console.log(values);
+    localStorage.setItem("step", "3");
+    router.push("/next-step");
   };
 
   return (
@@ -120,7 +119,7 @@ export const StepTwoProfileEdit = () => {
       <Button
         onClick={() => {
           localStorage.removeItem("step");
-          router.push("/finish"); // Redirect to finish or a confirmation page
+          router.push("/finish");
         }}
       >
         Finish
