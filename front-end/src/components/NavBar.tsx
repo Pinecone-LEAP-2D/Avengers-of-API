@@ -33,6 +33,7 @@ export default function NavBar(props: Props) {
         className={`w-[250px] h-[40px] transition duration-[.3s] flex items-center gap-[10px] hover:bg-gray-100 rounded-[10px] text-start pl-[15px] ${
           location === "view" ? "bg-gray-200 hover:bg-gray-200" : ""
         }`}
+        onClick={()=>window.open("user/x","_blank")}
       >
         View page <ExternalLink className="w-[18px] h-[18px]" strokeWidth={1} />
       </button>
