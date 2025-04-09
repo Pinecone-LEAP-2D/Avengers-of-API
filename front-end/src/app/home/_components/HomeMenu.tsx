@@ -1,7 +1,7 @@
 "use client";
 
 import { Check, Copy } from "lucide-react";
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import {
     Select,
     SelectContent,
@@ -21,9 +21,16 @@ export default function HomeMenu(){
         recents: [],
       });
     const [copyState, setCopyState] = useState(false);
+    const [origin, setOrigin] = useState('');
+
+    useEffect(()=>{
+        if(typeof window !== undefined){
+            setOrigin(window.location.origin);
+        }
+    },[])
 
     const handleCopyButton = () => {
-        navigator.clipboard.writeText(`http://localhost:3000/user/${user.username}`);
+        navigator.clipboard.writeText(`${origin}/user/${user.username}`);
         setCopyState(true);
         setTimeout(() => {
             setCopyState(false);
@@ -40,7 +47,7 @@ export default function HomeMenu(){
                         </div>
                         <div className="flex flex-col mt-[-5px]">
                             <div className="font-semibold">{user.username}</div>
-                            <a href={`http://localhost:3000/user/${user.username}`} className="underline text-[14px]">buymeacoffee.com/user/{user.username}</a>
+                            <a href={`${origin}/user/${user.username}`} className="underline text-[14px]">buymeacoffee.com/user/{user.username}</a>
                         </div>
                     </div>
                     {copyState 
