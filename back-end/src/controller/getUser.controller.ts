@@ -1,9 +1,11 @@
 import prisma from "../../prismaClient";
 import { Request, Response } from "express";
 
-export const getUser = async (req: Request, res: Response) => {
+export const GetUserController = async (req: Request, res: Response) => {
   try {
-    const users = await prisma.user.findMany({});
-    res.send({ test: "test" });
-  } catch (error) {}
+    const users = await prisma.user.findUnique({});
+    res.status(200).json({ message: "Login successful" });
+  } catch (error) {
+    res.status(500).json({ message: "Failed to fetch orders" });
+  }
 };
