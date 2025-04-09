@@ -4,6 +4,13 @@ import { useParams } from "next/navigation";
 import { useState } from "react";
 import { Heart, Coffee } from "lucide-react";
 import Header from "@/components/Header";
+import {
+  Dialog,
+  DialogContent,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+import { QRCodeCanvas } from "qrcode.react";
 
 export default function User() {
   const [user, setUser] = useState({
@@ -187,10 +194,35 @@ export default function User() {
             </div>
             <div>Make this monthly</div>
           </div>
-          <button className="bg-orange-400 text-white rounded-full w-full h-[40px] font-semibold mt-[20px]">
-            Support ${5 * coffeeCount}
-            {isMonthly && " / month"}
-          </button>
+          <Dialog>
+            <DialogTrigger asChild>
+              <button
+                className="bg-orange-400 text-white rounded-full w-full h-[40px] font-semibold mt-[20px]"
+                onClick={() => {}}
+              >
+                Support ${5 * coffeeCount}
+                {isMonthly && " / month"}
+              </button>
+            </DialogTrigger>
+
+            <DialogContent className="flex flex-col items-center text-center w-fit p-[50px] gap-[50px]">
+              <DialogTitle className="text-[25px] font-semibold flex flex-col gap-[15px]">
+                Scan QR code ${coffeeCount * 5}
+                <p className="text-sm text-muted-foreground font-light">
+                  Scan the QR code to complete your donation
+                </p>
+              </DialogTitle>
+              <img
+                src="../Lines.svg"
+                className="w-[270px] h-[270px] absolute mt-[89px]"
+              />
+              <QRCodeCanvas
+                className="mb-12 z-10"
+                value="https://www.streamhub.com/wasteland7"
+                size={200}
+              />
+            </DialogContent>
+          </Dialog>
         </div>
       </div>
     </div>
