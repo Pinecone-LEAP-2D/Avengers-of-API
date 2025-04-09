@@ -1,0 +1,66 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        Int        @id @default(autoincrement())
+  email     String     @unique
+  username  String?
+  password  String
+  createdAt DateTime
+  profile   Profile?   @relation(fields: [profileId], references: [id])
+  profileId Int        @unique
+  bankCard  BankCard[]
+  updatedAt DateTime
+  donations Donation[]
+}
+
+model BankCard {
+  id         Int      @id @default(autoincrement())
+  country    String
+  firstName  String
+  lastName   String
+  cardNumber String
+  expiryDate DateTime
+  userId     Int
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+  User       User[]
+}
+
+model Profile {
+  id              Int      @id @default(autoincrement())
+  name            String   @db.VarChar(20)
+  about           String   @db.VarChar(100)
+  avatarImage     String
+  socialMediaURL  String
+  backgroundImage String
+  successMessage  String
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+  User            User?
+}
+
+model Donation {
+  id                      Int      @id @default(autoincrement())
+  amount                  Int
+  specialMessage          String   @db.VarChar(50)
+  socialURLOrBuyMeACoffee String
+  donorId                 Int
+  recipientId             Int
+  createdAt               DateTime @default(now())
+  updatedAt               DateTime @updatedAt
+  User                    User[]
+}
