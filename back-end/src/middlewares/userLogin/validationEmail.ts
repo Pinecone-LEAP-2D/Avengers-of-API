@@ -6,7 +6,6 @@ export const validateEmail = async (
   res: Response,
   next: NextFunction
 ) => {
-  console.log(req);
   const { email, password } = req.body || {};
 
   let validRegex =

@@ -4,41 +4,30 @@ import prisma from "../../prismaClient";
 
 const saltRounds = 6;
 
-export const CreateUserController = async (req: Request, res: Response) => {
+export const CreateUserController = async (
+  req: Request,
+  res: Response
+): Promise<Response> => {
   const { email, password } = req.body;
-  console.log(req.body);
-
-  console.log({ email });
-
-  //   Hash the password
   const cryptPassword = bcrypt.hashSync(password, saltRounds);
 
   try {
-    // Create the user in the database with createdAt and updatedAt fields
     const createUser = await prisma.user.create({
       data: {
         email: email,
         password: cryptPassword,
-        createdAt: new Date(), // Manually set the createdAt
-        updatedAt: new Date(), // Manually set the updatedAt
+        createdAt: new Date(),
+        updatedAt: new Date(),
       },
     });
 
-    // Send success response
-    res.status(200).json({
-      success: true,
-      user: createUser,
-    });
-
-    res.status(200).json({
-      success: true,
+    return res.status(201).json({
+      message: "user Created",
     });
   } catch (err) {
-    // Log the error for debugging
-    console.error("Error creating user:", err);
+    console.log("Error creating user:", err);
 
-    // Send error response
-    res.status(500).json({
+    return res.status(500).json({
       success: false,
       message: "Internal server error",
     });
