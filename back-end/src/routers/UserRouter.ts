@@ -4,11 +4,13 @@ import { validatePassword } from "../middlewares/userLogin/validationPassword";
 import { CreateUserController } from "../controller/userCreate/CreateUser.controller";
 import { asyncHandler } from "../utils/asyncHandler";
 import { GetUserController } from "../controller/userCreate/getUser.controller";
+import { validateUserName } from "../middlewares/userLogin/validationUserName";
 
 export const UserRouter = express.Router();
 
 UserRouter.post(
   "/sign-up",
+  validateUserName,
   validateEmail,
   validatePassword,
   asyncHandler(CreateUserController)
