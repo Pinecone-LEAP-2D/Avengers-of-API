@@ -1,9 +1,9 @@
 import express from "express";
 import { validateEmail } from "../middlewares/userLogin/validationEmail";
 import { validatePassword } from "../middlewares/userLogin/validationPassword";
-import { CreateUserController } from "../controller/CreateUser.controller";
+import { CreateUserController } from "../controller/userCreate/CreateUser.controller";
 import { asyncHandler } from "../utils/asyncHandler";
-import { GetUserController } from "../controller/getUser.controller";
+import { GetUserController } from "../controller/userCreate/getUser.controller";
 
 export const UserRouter = express.Router();
 
@@ -13,4 +13,4 @@ UserRouter.post(
   validatePassword,
   asyncHandler(CreateUserController)
 );
-UserRouter.get("/sign-up", GetUserController);
+UserRouter.get("/sign-up", asyncHandler(GetUserController));

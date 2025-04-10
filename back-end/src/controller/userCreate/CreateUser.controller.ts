@@ -1,6 +1,6 @@
 import bcrypt from "bcrypt";
 import { Request, Response } from "express";
-import prisma from "../../prismaClient";
+import prisma from "../../../prismaClient";
 
 const saltRounds = 6;
 
