@@ -57,12 +57,14 @@ export const StepOneProfileEdit = ({ setStep }: StepOneProfileEditProps) => {
                     name="media"
                     type="file"
                     accept="image/*"
-                    className="opacity- absolute w-[160px] h-[160px] rounded-full cursor-pointer"
+                    className="opacity-0 absolute w-[160px] h-[160px] rounded-full cursor-pointer"
                     onChange={(event) => {
                       const file = event.currentTarget.files?.[0] || null;
                       setFieldValue("media", file);
                       if (file) {
                         setPreview(URL.createObjectURL(file));
+                      }else{
+                        setPreview(null);
                       }
                     }}
                   />
