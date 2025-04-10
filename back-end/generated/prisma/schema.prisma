@@ -17,7 +17,7 @@ datasource db {
 model User {
   id        Int        @id @default(autoincrement())
   email     String     @unique
-  username  String?
+  username  String?    @unique
   password  String
   createdAt DateTime
   profile   Profile?   @relation(fields: [profileId], references: [id])
@@ -46,7 +46,7 @@ model Profile {
   about           String   @db.VarChar(100)
   avatarImage     String
   socialMediaURL  String
-  backgroundImage String
+  backgroundImage String?
   successMessage  String
   createdAt       DateTime @default(now())
   updatedAt       DateTime @updatedAt

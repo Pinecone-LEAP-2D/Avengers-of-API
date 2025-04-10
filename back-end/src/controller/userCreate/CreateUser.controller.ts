@@ -8,12 +8,13 @@ export const CreateUserController = async (
   req: Request,
   res: Response
 ): Promise<Response> => {
-  const { email, password } = req.body;
+  const { email, password, username } = req.body;
   const cryptPassword = bcrypt.hashSync(password, saltRounds);
 
   try {
     const createUser = await prisma.user.create({
       data: {
+        username: username,
         email: email,
         password: cryptPassword,
         createdAt: new Date(),

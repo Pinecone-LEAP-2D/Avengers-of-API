@@ -3797,7 +3797,7 @@ export namespace Prisma {
     about: string
     avatarImage: string
     socialMediaURL: string
-    backgroundImage: string
+    backgroundImage: string | null
     successMessage: string
     createdAt: Date
     updatedAt: Date
@@ -3889,7 +3889,7 @@ export namespace Prisma {
       about: string
       avatarImage: string
       socialMediaURL: string
-      backgroundImage: string
+      backgroundImage: string | null
       successMessage: string
       createdAt: Date
       updatedAt: Date
@@ -6097,18 +6097,18 @@ export namespace Prisma {
   export type UserWhereUniqueInput = Prisma.AtLeast<{
     id?: number
     email?: string
+    username?: string
     profileId?: number
     AND?: UserWhereInput | UserWhereInput[]
     OR?: UserWhereInput[]
     NOT?: UserWhereInput | UserWhereInput[]
-    username?: StringNullableFilter<"User"> | string | null
     password?: StringFilter<"User"> | string
     createdAt?: DateTimeFilter<"User"> | Date | string
     updatedAt?: DateTimeFilter<"User"> | Date | string
     profile?: XOR<ProfileNullableScalarRelationFilter, ProfileWhereInput> | null
     bankCard?: BankCardListRelationFilter
     donations?: DonationListRelationFilter
-  }, "id" | "email" | "profileId">
+  }, "id" | "email" | "username" | "profileId">
 
   export type UserOrderByWithAggregationInput = {
     id?: SortOrder
@@ -6224,7 +6224,7 @@ export namespace Prisma {
     about?: StringFilter<"Profile"> | string
     avatarImage?: StringFilter<"Profile"> | string
     socialMediaURL?: StringFilter<"Profile"> | string
-    backgroundImage?: StringFilter<"Profile"> | string
+    backgroundImage?: StringNullableFilter<"Profile"> | string | null
     successMessage?: StringFilter<"Profile"> | string
     createdAt?: DateTimeFilter<"Profile"> | Date | string
     updatedAt?: DateTimeFilter<"Profile"> | Date | string
@@ -6237,7 +6237,7 @@ export namespace Prisma {
     about?: SortOrder
     avatarImage?: SortOrder
     socialMediaURL?: SortOrder
-    backgroundImage?: SortOrder
+    backgroundImage?: SortOrderInput | SortOrder
     successMessage?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -6253,7 +6253,7 @@ export namespace Prisma {
     about?: StringFilter<"Profile"> | string
     avatarImage?: StringFilter<"Profile"> | string
     socialMediaURL?: StringFilter<"Profile"> | string
-    backgroundImage?: StringFilter<"Profile"> | string
+    backgroundImage?: StringNullableFilter<"Profile"> | string | null
     successMessage?: StringFilter<"Profile"> | string
     createdAt?: DateTimeFilter<"Profile"> | Date | string
     updatedAt?: DateTimeFilter<"Profile"> | Date | string
@@ -6266,7 +6266,7 @@ export namespace Prisma {
     about?: SortOrder
     avatarImage?: SortOrder
     socialMediaURL?: SortOrder
-    backgroundImage?: SortOrder
+    backgroundImage?: SortOrderInput | SortOrder
     successMessage?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -6286,7 +6286,7 @@ export namespace Prisma {
     about?: StringWithAggregatesFilter<"Profile"> | string
     avatarImage?: StringWithAggregatesFilter<"Profile"> | string
     socialMediaURL?: StringWithAggregatesFilter<"Profile"> | string
-    backgroundImage?: StringWithAggregatesFilter<"Profile"> | string
+    backgroundImage?: StringNullableWithAggregatesFilter<"Profile"> | string | null
     successMessage?: StringWithAggregatesFilter<"Profile"> | string
     createdAt?: DateTimeWithAggregatesFilter<"Profile"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"Profile"> | Date | string
@@ -6528,7 +6528,7 @@ export namespace Prisma {
     about: string
     avatarImage: string
     socialMediaURL: string
-    backgroundImage: string
+    backgroundImage?: string | null
     successMessage: string
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -6541,7 +6541,7 @@ export namespace Prisma {
     about: string
     avatarImage: string
     socialMediaURL: string
-    backgroundImage: string
+    backgroundImage?: string | null
     successMessage: string
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -6553,7 +6553,7 @@ export namespace Prisma {
     about?: StringFieldUpdateOperationsInput | string
     avatarImage?: StringFieldUpdateOperationsInput | string
     socialMediaURL?: StringFieldUpdateOperationsInput | string
-    backgroundImage?: StringFieldUpdateOperationsInput | string
+    backgroundImage?: NullableStringFieldUpdateOperationsInput | string | null
     successMessage?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -6566,7 +6566,7 @@ export namespace Prisma {
     about?: StringFieldUpdateOperationsInput | string
     avatarImage?: StringFieldUpdateOperationsInput | string
     socialMediaURL?: StringFieldUpdateOperationsInput | string
-    backgroundImage?: StringFieldUpdateOperationsInput | string
+    backgroundImage?: NullableStringFieldUpdateOperationsInput | string | null
     successMessage?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -6579,7 +6579,7 @@ export namespace Prisma {
     about: string
     avatarImage: string
     socialMediaURL: string
-    backgroundImage: string
+    backgroundImage?: string | null
     successMessage: string
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -6590,7 +6590,7 @@ export namespace Prisma {
     about?: StringFieldUpdateOperationsInput | string
     avatarImage?: StringFieldUpdateOperationsInput | string
     socialMediaURL?: StringFieldUpdateOperationsInput | string
-    backgroundImage?: StringFieldUpdateOperationsInput | string
+    backgroundImage?: NullableStringFieldUpdateOperationsInput | string | null
     successMessage?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -6602,7 +6602,7 @@ export namespace Prisma {
     about?: StringFieldUpdateOperationsInput | string
     avatarImage?: StringFieldUpdateOperationsInput | string
     socialMediaURL?: StringFieldUpdateOperationsInput | string
-    backgroundImage?: StringFieldUpdateOperationsInput | string
+    backgroundImage?: NullableStringFieldUpdateOperationsInput | string | null
     successMessage?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -7449,7 +7449,7 @@ export namespace Prisma {
     about: string
     avatarImage: string
     socialMediaURL: string
-    backgroundImage: string
+    backgroundImage?: string | null
     successMessage: string
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -7461,7 +7461,7 @@ export namespace Prisma {
     about: string
     avatarImage: string
     socialMediaURL: string
-    backgroundImage: string
+    backgroundImage?: string | null
     successMessage: string
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -7542,7 +7542,7 @@ export namespace Prisma {
     about?: StringFieldUpdateOperationsInput | string
     avatarImage?: StringFieldUpdateOperationsInput | string
     socialMediaURL?: StringFieldUpdateOperationsInput | string
-    backgroundImage?: StringFieldUpdateOperationsInput | string
+    backgroundImage?: NullableStringFieldUpdateOperationsInput | string | null
     successMessage?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -7554,7 +7554,7 @@ export namespace Prisma {
     about?: StringFieldUpdateOperationsInput | string
     avatarImage?: StringFieldUpdateOperationsInput | string
     socialMediaURL?: StringFieldUpdateOperationsInput | string
-    backgroundImage?: StringFieldUpdateOperationsInput | string
+    backgroundImage?: NullableStringFieldUpdateOperationsInput | string | null
     successMessage?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
