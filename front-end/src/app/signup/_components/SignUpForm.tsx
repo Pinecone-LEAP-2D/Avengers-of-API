@@ -8,9 +8,16 @@ import * as Yup from "yup";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
+import axios from "axios";
+import { useRouter } from "next/navigation";
 
 export default function SignUpPage() {
   const [step, setStep] = useState(1);
+  const [usernameInput, setUsernameInput] = useState('');
+  const [usernameError, setUsernameError] = useState(false);
+
+  const router = useRouter();
+  
 
   return (
     <div className="flex h-screen">
@@ -53,42 +60,13 @@ export default function SignUpPage() {
           </p>
 
           {step === 1 ? (
-            // Step 1: Username Input
-            <Formik
-              initialValues={{ username: "" }}
-              validationSchema={Yup.object({
-                username: Yup.string()
-                  .min(3, "Minimum 3 characters")
-                  .required("Required"),
-              })}
-              onSubmit={() => setStep(2)}
-            >
-              {({ isSubmitting }) => (
-                <Form className="space-y-4">
-                  <div>
-                    <Label>Username</Label>
-                    <Field
-                      as={Input}
-                      type="text"
-                      name="username"
-                      placeholder="Enter username here"
-                    />
-                    <ErrorMessage
-                      name="username"
-                      component="div"
-                      className="text-red-500 text-sm"
-                    />
-                  </div>
-                  <Button
-                    type="submit"
-                    className="w-full"
-                    disabled={isSubmitting}
-                  >
-                    Continue
-                  </Button>
-                </Form>
+            <div className="w-[384px] flex flex-col gap-[20px]">
+              <input type="text" name="username" className="text-[15px] outline-0 focus:outline-[4px] transition-all duration-[.3s] border-1px rounded-md border-[1px] w-full h-[36px] py-[4px] px-[12px]" placeholder="Enter username here" onChange={(e)=>{setUsernameError(false); setUsernameInput(e.target.value)}} value={usernameInput}/>
+              {usernameError && (
+                <div className="asbolute text-red-400 text-[14px] mt-[-20px]">Username need to be at least 3 characters</div>
               )}
-            </Formik>
+              <button className="w-full bg-black rounded-md text-white h-[36px]" onClick={()=>{usernameInput.length < 3 ? setUsernameError(true) : setStep(2)}}>Continue</button>
+            </div>
           ) : (
             // Step 2: Email & Password Form
             <Formik
@@ -99,8 +77,14 @@ export default function SignUpPage() {
                   .min(6, "Minimum 6 characters")
                   .required("Required"),
               })}
-              onSubmit={(values) => {
-                console.log("User Registered:", values);
+              onSubmit={async(values) => {
+                console.log("User Registered:", values.email, usernameInput,values.password);
+                try{
+                  await axios.post("http://localhost:3000/user/sign-up",{email: values.email, username: usernameInput, password: values.password});
+                  router.push("login");
+                }catch(err){
+                  console.log(err);
+                }
               }}
             >
               {({ isSubmitting }) => (
