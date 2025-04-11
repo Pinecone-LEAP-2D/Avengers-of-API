@@ -1,14 +1,11 @@
 import { Request, Response } from "express";
-import { PrismaClient } from "@prisma/client";
+import prisma from "../../../prismaClient";
 
-const prisma = new PrismaClient();
-
-export const createBankCard = async (req: Request, res: Response) => {
+export const CreateBankCardController = async (req: Request, res: Response) => {
   try {
     const { country, firstName, lastName, cardNumber, expiryDate, userId } =
       req.body;
 
-    // Optional: Basic validation
     if (
       !country ||
       !firstName ||
