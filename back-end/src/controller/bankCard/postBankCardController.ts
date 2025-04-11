@@ -33,7 +33,9 @@ export const CreateBankCardController = async (req: Request, res: Response) => {
     return;
   } catch (error) {
     console.error("Create BankCard Error:", error);
-    res.status(500).json({ message: "Something went wrong." });
+    res
+      .status(400)
+      .json({ message: "Bank already signed Something went wrong." });
     return;
   }
 };
