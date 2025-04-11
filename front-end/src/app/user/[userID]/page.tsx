@@ -1,7 +1,7 @@
 "use client";
 
 import { useParams } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Heart, Coffee } from "lucide-react";
 import Header from "@/components/Header";
 import {
@@ -11,8 +11,19 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { QRCodeCanvas } from "qrcode.react";
+import { useRouter } from "next/navigation";
 
 export default function User() {
+  const router = useRouter();
+
+  useEffect(() => {
+    if (typeof window !== undefined) {
+      if (!window.localStorage.token) {
+        router.push("/login");
+      }
+    }
+  }, []);
+
   const [user, setUser] = useState({
     id: "1234-2136-6231-6533",
     username: "xhz",

@@ -42,16 +42,16 @@ export default function SignUpPage() {
       <div className="w-1/2 flex flex-col justify-center items-center p-10 relative">
         {/* Top right switch button */}
         <div className="absolute top-16 right-20">
-          <Link href={step === 1 ? "/login" : "/signup"}>
+          <Link href={"/login"}>
             <Button variant="outline" size="sm">
-              {step === 1 ? "Log in" : "Sign up"}
+              Log in
             </Button>
           </Link>
         </div>
 
         <div className="w-full max-w-sm">
           <h2 className="text-2xl font-bold mb-1">
-            {step === 1 ? "Create Your Account" : "Create Your Account"}
+            Create Your Account
           </h2>
           <p className="text-sm text-gray-500 mb-6">
             {step === 1
