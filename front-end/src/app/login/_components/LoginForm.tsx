@@ -7,6 +7,8 @@ import * as Yup from "yup";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
+import axios from "axios";
+import { useRouter } from "next/navigation";
 
 const LoginSchema = Yup.object().shape({
   email: Yup.string()
@@ -18,6 +20,8 @@ const LoginSchema = Yup.object().shape({
 });
 
 export default function LoginPage() {
+
+  const router = useRouter();
   return (
     <div className="flex h-screen">
       {/* Left Side - Illustration & Text */}
@@ -53,7 +57,20 @@ export default function LoginPage() {
           <Formik
             initialValues={{ email: "", password: "" }}
             validationSchema={LoginSchema}
-            onSubmit={(values) => console.log("Login Values", values)}
+            onSubmit={async(values) => {
+              try{
+                const response = await axios.post("http://localhost:3000/user/login",{
+                  email: values.email,
+                  password: values.password
+                })
+                if(response.status === 200){
+                  localStorage.setItem("token",response.data.token);
+                  router.push("home");
+                }
+              }catch(err){
+                console.log(err);
+              }
+            }}
           >
             {({ isSubmitting }) => (
               <Form className="space-y-4">
