@@ -43,8 +43,8 @@ model Profile {
   id              Int      @id @default(autoincrement())
   name            String   @db.VarChar(20)
   about           String   @db.VarChar(100)
-  avatarImage     String
-  socialMediaURL  String
+  avatarImage     String?
+  socialMediaURL  String?
   backgroundImage String?
   successMessage  String
   createdAt       DateTime @default(now())
