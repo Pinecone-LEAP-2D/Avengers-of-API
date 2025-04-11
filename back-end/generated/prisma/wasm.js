@@ -123,7 +123,6 @@ exports.Prisma.UserScalarFieldEnum = {
   username: 'username',
   password: 'password',
   createdAt: 'createdAt',
-  profileId: 'profileId',
   updatedAt: 'updatedAt'
 };
 
@@ -148,7 +147,8 @@ exports.Prisma.ProfileScalarFieldEnum = {
   backgroundImage: 'backgroundImage',
   successMessage: 'successMessage',
   createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
+  updatedAt: 'updatedAt',
+  userId: 'userId'
 };
 
 exports.Prisma.DonationScalarFieldEnum = {
