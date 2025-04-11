@@ -20,7 +20,11 @@ export const GetProfileController = async (req: Request, res: Response) => {
       //   name: true,
       // },
       include: {
-        user: true,
+        user: {
+          include: {
+            bankCard: true,
+          },
+        },
       },
     });
 
