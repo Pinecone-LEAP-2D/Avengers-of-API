@@ -5,17 +5,8 @@ import StepOneProfileEdit from "./components/StepOne";
 import { StepTwoProfileEdit } from "./components/StepTwo";
 
 const ProfileUser = () => {
-  const [step, setStep] = useState(() => {
-    if (typeof window !== "undefined") {
-      const saved = localStorage.getItem("step");
-      return saved ? Number(saved) : 1;
-    }
-    return 1;
-  });
+  const [step, setStep] = useState(1);
 
-  useEffect(() => {
-    localStorage.setItem("step", step.toString());
-  }, [step]);
 
   return (
     <div className="min-h-screen p-8 pb-20 sm:p-10 font-sans grid grid-rows-[auto_1fr_auto] gap-16">

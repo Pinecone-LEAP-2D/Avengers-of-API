@@ -1,12 +1,24 @@
-import QrPaymentDialog from "@/components/QrPaymentDialog";
+"use client";
 
-const CheckoutPage = () => {
+import CoffeeLoading from "@/components/CoffeeLoading";
+import { useRouter } from "next/navigation";
+import { useEffect } from "react";
+
+export default function Main(){
+
+  const router = useRouter();
+
+  useEffect(()=>{
+    if(typeof window !== undefined){
+      if(window.localStorage.token){
+        router.push("/home");
+      }else{
+        router.push("/login");
+      }
+    }
+  },[])
+    
   return (
-    <div className="p-6">
-      <h1 className="text-2xl font-semibold mb-4">Төлбөр</h1>
-      <QrPaymentDialog amount={5000} paymentLink="https://qpay.mn/example" />
-    </div>
+    <CoffeeLoading />
   );
 };
-
-export default CheckoutPage;

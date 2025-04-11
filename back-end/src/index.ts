@@ -1,8 +1,8 @@
 import express from "express";
 import { UserRouter } from "./routers/UserRouter";
+const cors = require('cors');
 import { LoginUserRouter } from "./routers/LoginUserRouter";
 import { ProfileRouter } from "./routers/ProfileRouter";
-import cors from "cors";
 import dotenv from "dotenv";
 dotenv.config();
 
