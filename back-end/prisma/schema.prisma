@@ -31,12 +31,12 @@ model BankCard {
   country    String
   firstName  String
   lastName   String
-  cardNumber String
+  cardNumber String   @unique
   expiryDate DateTime
   userId     Int
   createdAt  DateTime @default(now())
   updatedAt  DateTime @updatedAt
-  User       User[]
+  user       User     @relation(fields: [userId], references: [id])
 }
 
 model Profile {

@@ -1,8 +1,8 @@
 import express from "express";
-import { createBankCard } from "../controller/bankCard/postBankCardController";
+import { CreateBankCardController } from "../controller/bankCard/postBankCardController";
+import { GetBankCardController } from "../controller/bankCard/getBankCardController";
 
-const router = express.Router();
+export const BankRouter = express.Router();
 
-router.post("/bank-card/:userId", createBankCard);
-
-export default router;
+BankRouter.get("", GetBankCardController);
+BankRouter.post("", CreateBankCardController);

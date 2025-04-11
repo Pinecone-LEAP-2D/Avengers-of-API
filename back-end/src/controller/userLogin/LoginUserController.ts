@@ -44,14 +44,17 @@ export const LoginUserController = async (
       {
         userId: userFound.id,
         email: userFound.email,
+        username: userFound.username,
       },
       process.env.JWT_SECRET || "default_secret",
       { expiresIn: "1h" }
     );
 
+    const { password: passRemove, ...userData } = userFound;
+
     res.status(200).json({
       success: true,
-      user: userFound,
+      user: userData,
       token,
     });
   } catch (err) {

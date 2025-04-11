@@ -8,6 +8,7 @@ import { validateUserName } from "../middlewares/userLogin/validationUserName";
 
 export const UserRouter = express.Router();
 
+UserRouter.get("/", () => {});
 UserRouter.post(
   "/sign-up",
   validateUserName,

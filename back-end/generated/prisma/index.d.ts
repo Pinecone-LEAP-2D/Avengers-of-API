@@ -1178,37 +1178,6 @@ export namespace Prisma {
 
 
   /**
-   * Count Type BankCardCountOutputType
-   */
-
-  export type BankCardCountOutputType = {
-    User: number
-  }
-
-  export type BankCardCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    User?: boolean | BankCardCountOutputTypeCountUserArgs
-  }
-
-  // Custom InputTypes
-  /**
-   * BankCardCountOutputType without action
-   */
-  export type BankCardCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the BankCardCountOutputType
-     */
-    select?: BankCardCountOutputTypeSelect<ExtArgs> | null
-  }
-
-  /**
-   * BankCardCountOutputType without action
-   */
-  export type BankCardCountOutputTypeCountUserArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: UserWhereInput
-  }
-
-
-  /**
    * Count Type DonationCountOutputType
    */
 
@@ -2645,8 +2614,7 @@ export namespace Prisma {
     userId?: boolean
     createdAt?: boolean
     updatedAt?: boolean
-    User?: boolean | BankCard$UserArgs<ExtArgs>
-    _count?: boolean | BankCardCountOutputTypeDefaultArgs<ExtArgs>
+    user?: boolean | UserDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["bankCard"]>
 
   export type BankCardSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -2659,6 +2627,7 @@ export namespace Prisma {
     userId?: boolean
     createdAt?: boolean
     updatedAt?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["bankCard"]>
 
   export type BankCardSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -2671,6 +2640,7 @@ export namespace Prisma {
     userId?: boolean
     createdAt?: boolean
     updatedAt?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["bankCard"]>
 
   export type BankCardSelectScalar = {
@@ -2687,16 +2657,19 @@ export namespace Prisma {
 
   export type BankCardOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "country" | "firstName" | "lastName" | "cardNumber" | "expiryDate" | "userId" | "createdAt" | "updatedAt", ExtArgs["result"]["bankCard"]>
   export type BankCardInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    User?: boolean | BankCard$UserArgs<ExtArgs>
-    _count?: boolean | BankCardCountOutputTypeDefaultArgs<ExtArgs>
+    user?: boolean | UserDefaultArgs<ExtArgs>
   }
-  export type BankCardIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
-  export type BankCardIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
+  export type BankCardIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }
+  export type BankCardIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }
 
   export type $BankCardPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "BankCard"
     objects: {
-      User: Prisma.$UserPayload<ExtArgs>[]
+      user: Prisma.$UserPayload<ExtArgs>
     }
     scalars: $Extensions.GetPayloadResult<{
       id: number
@@ -3102,7 +3075,7 @@ export namespace Prisma {
    */
   export interface Prisma__BankCardClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
-    User<T extends BankCard$UserArgs<ExtArgs> = {}>(args?: Subset<T, BankCard$UserArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    user<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -3390,6 +3363,10 @@ export namespace Prisma {
      */
     data: BankCardCreateManyInput | BankCardCreateManyInput[]
     skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: BankCardIncludeCreateManyAndReturn<ExtArgs> | null
   }
 
   /**
@@ -3460,6 +3437,10 @@ export namespace Prisma {
      * Limit how many BankCards to update.
      */
     limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: BankCardIncludeUpdateManyAndReturn<ExtArgs> | null
   }
 
   /**
@@ -3526,30 +3507,6 @@ export namespace Prisma {
      * Limit how many BankCards to delete.
      */
     limit?: number
-  }
-
-  /**
-   * BankCard.User
-   */
-  export type BankCard$UserArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the User
-     */
-    select?: UserSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the User
-     */
-    omit?: UserOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: UserInclude<ExtArgs> | null
-    where?: UserWhereInput
-    orderBy?: UserOrderByWithRelationInput | UserOrderByWithRelationInput[]
-    cursor?: UserWhereUniqueInput
-    take?: number
-    skip?: number
-    distinct?: UserScalarFieldEnum | UserScalarFieldEnum[]
   }
 
   /**
@@ -6127,7 +6084,7 @@ export namespace Prisma {
     userId?: IntFilter<"BankCard"> | number
     createdAt?: DateTimeFilter<"BankCard"> | Date | string
     updatedAt?: DateTimeFilter<"BankCard"> | Date | string
-    User?: UserListRelationFilter
+    user?: XOR<UserScalarRelationFilter, UserWhereInput>
   }
 
   export type BankCardOrderByWithRelationInput = {
@@ -6140,24 +6097,24 @@ export namespace Prisma {
     userId?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
-    User?: UserOrderByRelationAggregateInput
+    user?: UserOrderByWithRelationInput
   }
 
   export type BankCardWhereUniqueInput = Prisma.AtLeast<{
     id?: number
+    cardNumber?: string
     AND?: BankCardWhereInput | BankCardWhereInput[]
     OR?: BankCardWhereInput[]
     NOT?: BankCardWhereInput | BankCardWhereInput[]
     country?: StringFilter<"BankCard"> | string
     firstName?: StringFilter<"BankCard"> | string
     lastName?: StringFilter<"BankCard"> | string
-    cardNumber?: StringFilter<"BankCard"> | string
     expiryDate?: DateTimeFilter<"BankCard"> | Date | string
     userId?: IntFilter<"BankCard"> | number
     createdAt?: DateTimeFilter<"BankCard"> | Date | string
     updatedAt?: DateTimeFilter<"BankCard"> | Date | string
-    User?: UserListRelationFilter
-  }, "id">
+    user?: XOR<UserScalarRelationFilter, UserWhereInput>
+  }, "id" | "cardNumber">
 
   export type BankCardOrderByWithAggregationInput = {
     id?: SortOrder
@@ -6423,10 +6380,9 @@ export namespace Prisma {
     lastName: string
     cardNumber: string
     expiryDate: Date | string
-    userId: number
     createdAt?: Date | string
     updatedAt?: Date | string
-    User?: UserCreateNestedManyWithoutBankCardInput
+    user: UserCreateNestedOneWithoutBankCardInput
   }
 
   export type BankCardUncheckedCreateInput = {
@@ -6439,7 +6395,6 @@ export namespace Prisma {
     userId: number
     createdAt?: Date | string
     updatedAt?: Date | string
-    User?: UserUncheckedCreateNestedManyWithoutBankCardInput
   }
 
   export type BankCardUpdateInput = {
@@ -6448,10 +6403,9 @@ export namespace Prisma {
     lastName?: StringFieldUpdateOperationsInput | string
     cardNumber?: StringFieldUpdateOperationsInput | string
     expiryDate?: DateTimeFieldUpdateOperationsInput | Date | string
-    userId?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    User?: UserUpdateManyWithoutBankCardNestedInput
+    user?: UserUpdateOneRequiredWithoutBankCardNestedInput
   }
 
   export type BankCardUncheckedUpdateInput = {
@@ -6464,7 +6418,6 @@ export namespace Prisma {
     userId?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    User?: UserUncheckedUpdateManyWithoutBankCardNestedInput
   }
 
   export type BankCardCreateManyInput = {
@@ -6485,7 +6438,6 @@ export namespace Prisma {
     lastName?: StringFieldUpdateOperationsInput | string
     cardNumber?: StringFieldUpdateOperationsInput | string
     expiryDate?: DateTimeFieldUpdateOperationsInput | Date | string
-    userId?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -6850,14 +6802,9 @@ export namespace Prisma {
     _max?: NestedDateTimeFilter<$PrismaModel>
   }
 
-  export type UserListRelationFilter = {
-    every?: UserWhereInput
-    some?: UserWhereInput
-    none?: UserWhereInput
-  }
-
-  export type UserOrderByRelationAggregateInput = {
-    _count?: SortOrder
+  export type UserScalarRelationFilter = {
+    is?: UserWhereInput
+    isNot?: UserWhereInput
   }
 
   export type BankCardCountOrderByAggregateInput = {
@@ -6904,11 +6851,6 @@ export namespace Prisma {
   export type BankCardSumOrderByAggregateInput = {
     id?: SortOrder
     userId?: SortOrder
-  }
-
-  export type UserScalarRelationFilter = {
-    is?: UserWhereInput
-    isNot?: UserWhereInput
   }
 
   export type ProfileCountOrderByAggregateInput = {
@@ -6958,6 +6900,16 @@ export namespace Prisma {
   export type ProfileSumOrderByAggregateInput = {
     id?: SortOrder
     userId?: SortOrder
+  }
+
+  export type UserListRelationFilter = {
+    every?: UserWhereInput
+    some?: UserWhereInput
+    none?: UserWhereInput
+  }
+
+  export type UserOrderByRelationAggregateInput = {
+    _count?: SortOrder
   }
 
   export type DonationCountOrderByAggregateInput = {
@@ -7016,6 +6968,7 @@ export namespace Prisma {
   export type BankCardCreateNestedManyWithoutUserInput = {
     create?: XOR<BankCardCreateWithoutUserInput, BankCardUncheckedCreateWithoutUserInput> | BankCardCreateWithoutUserInput[] | BankCardUncheckedCreateWithoutUserInput[]
     connectOrCreate?: BankCardCreateOrConnectWithoutUserInput | BankCardCreateOrConnectWithoutUserInput[]
+    createMany?: BankCardCreateManyUserInputEnvelope
     connect?: BankCardWhereUniqueInput | BankCardWhereUniqueInput[]
   }
 
@@ -7034,6 +6987,7 @@ export namespace Prisma {
   export type BankCardUncheckedCreateNestedManyWithoutUserInput = {
     create?: XOR<BankCardCreateWithoutUserInput, BankCardUncheckedCreateWithoutUserInput> | BankCardCreateWithoutUserInput[] | BankCardUncheckedCreateWithoutUserInput[]
     connectOrCreate?: BankCardCreateOrConnectWithoutUserInput | BankCardCreateOrConnectWithoutUserInput[]
+    createMany?: BankCardCreateManyUserInputEnvelope
     connect?: BankCardWhereUniqueInput | BankCardWhereUniqueInput[]
   }
 
@@ -7069,6 +7023,7 @@ export namespace Prisma {
     create?: XOR<BankCardCreateWithoutUserInput, BankCardUncheckedCreateWithoutUserInput> | BankCardCreateWithoutUserInput[] | BankCardUncheckedCreateWithoutUserInput[]
     connectOrCreate?: BankCardCreateOrConnectWithoutUserInput | BankCardCreateOrConnectWithoutUserInput[]
     upsert?: BankCardUpsertWithWhereUniqueWithoutUserInput | BankCardUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: BankCardCreateManyUserInputEnvelope
     set?: BankCardWhereUniqueInput | BankCardWhereUniqueInput[]
     disconnect?: BankCardWhereUniqueInput | BankCardWhereUniqueInput[]
     delete?: BankCardWhereUniqueInput | BankCardWhereUniqueInput[]
@@ -7113,6 +7068,7 @@ export namespace Prisma {
     create?: XOR<BankCardCreateWithoutUserInput, BankCardUncheckedCreateWithoutUserInput> | BankCardCreateWithoutUserInput[] | BankCardUncheckedCreateWithoutUserInput[]
     connectOrCreate?: BankCardCreateOrConnectWithoutUserInput | BankCardCreateOrConnectWithoutUserInput[]
     upsert?: BankCardUpsertWithWhereUniqueWithoutUserInput | BankCardUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: BankCardCreateManyUserInputEnvelope
     set?: BankCardWhereUniqueInput | BankCardWhereUniqueInput[]
     disconnect?: BankCardWhereUniqueInput | BankCardWhereUniqueInput[]
     delete?: BankCardWhereUniqueInput | BankCardWhereUniqueInput[]
@@ -7135,42 +7091,18 @@ export namespace Prisma {
     deleteMany?: DonationScalarWhereInput | DonationScalarWhereInput[]
   }
 
-  export type UserCreateNestedManyWithoutBankCardInput = {
-    create?: XOR<UserCreateWithoutBankCardInput, UserUncheckedCreateWithoutBankCardInput> | UserCreateWithoutBankCardInput[] | UserUncheckedCreateWithoutBankCardInput[]
-    connectOrCreate?: UserCreateOrConnectWithoutBankCardInput | UserCreateOrConnectWithoutBankCardInput[]
-    connect?: UserWhereUniqueInput | UserWhereUniqueInput[]
+  export type UserCreateNestedOneWithoutBankCardInput = {
+    create?: XOR<UserCreateWithoutBankCardInput, UserUncheckedCreateWithoutBankCardInput>
+    connectOrCreate?: UserCreateOrConnectWithoutBankCardInput
+    connect?: UserWhereUniqueInput
   }
 
-  export type UserUncheckedCreateNestedManyWithoutBankCardInput = {
-    create?: XOR<UserCreateWithoutBankCardInput, UserUncheckedCreateWithoutBankCardInput> | UserCreateWithoutBankCardInput[] | UserUncheckedCreateWithoutBankCardInput[]
-    connectOrCreate?: UserCreateOrConnectWithoutBankCardInput | UserCreateOrConnectWithoutBankCardInput[]
-    connect?: UserWhereUniqueInput | UserWhereUniqueInput[]
-  }
-
-  export type UserUpdateManyWithoutBankCardNestedInput = {
-    create?: XOR<UserCreateWithoutBankCardInput, UserUncheckedCreateWithoutBankCardInput> | UserCreateWithoutBankCardInput[] | UserUncheckedCreateWithoutBankCardInput[]
-    connectOrCreate?: UserCreateOrConnectWithoutBankCardInput | UserCreateOrConnectWithoutBankCardInput[]
-    upsert?: UserUpsertWithWhereUniqueWithoutBankCardInput | UserUpsertWithWhereUniqueWithoutBankCardInput[]
-    set?: UserWhereUniqueInput | UserWhereUniqueInput[]
-    disconnect?: UserWhereUniqueInput | UserWhereUniqueInput[]
-    delete?: UserWhereUniqueInput | UserWhereUniqueInput[]
-    connect?: UserWhereUniqueInput | UserWhereUniqueInput[]
-    update?: UserUpdateWithWhereUniqueWithoutBankCardInput | UserUpdateWithWhereUniqueWithoutBankCardInput[]
-    updateMany?: UserUpdateManyWithWhereWithoutBankCardInput | UserUpdateManyWithWhereWithoutBankCardInput[]
-    deleteMany?: UserScalarWhereInput | UserScalarWhereInput[]
-  }
-
-  export type UserUncheckedUpdateManyWithoutBankCardNestedInput = {
-    create?: XOR<UserCreateWithoutBankCardInput, UserUncheckedCreateWithoutBankCardInput> | UserCreateWithoutBankCardInput[] | UserUncheckedCreateWithoutBankCardInput[]
-    connectOrCreate?: UserCreateOrConnectWithoutBankCardInput | UserCreateOrConnectWithoutBankCardInput[]
-    upsert?: UserUpsertWithWhereUniqueWithoutBankCardInput | UserUpsertWithWhereUniqueWithoutBankCardInput[]
-    set?: UserWhereUniqueInput | UserWhereUniqueInput[]
-    disconnect?: UserWhereUniqueInput | UserWhereUniqueInput[]
-    delete?: UserWhereUniqueInput | UserWhereUniqueInput[]
-    connect?: UserWhereUniqueInput | UserWhereUniqueInput[]
-    update?: UserUpdateWithWhereUniqueWithoutBankCardInput | UserUpdateWithWhereUniqueWithoutBankCardInput[]
-    updateMany?: UserUpdateManyWithWhereWithoutBankCardInput | UserUpdateManyWithWhereWithoutBankCardInput[]
-    deleteMany?: UserScalarWhereInput | UserScalarWhereInput[]
+  export type UserUpdateOneRequiredWithoutBankCardNestedInput = {
+    create?: XOR<UserCreateWithoutBankCardInput, UserUncheckedCreateWithoutBankCardInput>
+    connectOrCreate?: UserCreateOrConnectWithoutBankCardInput
+    upsert?: UserUpsertWithoutBankCardInput
+    connect?: UserWhereUniqueInput
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutBankCardInput, UserUpdateWithoutBankCardInput>, UserUncheckedUpdateWithoutBankCardInput>
   }
 
   export type UserCreateNestedOneWithoutProfileInput = {
@@ -7395,7 +7327,6 @@ export namespace Prisma {
     lastName: string
     cardNumber: string
     expiryDate: Date | string
-    userId: number
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -7407,7 +7338,6 @@ export namespace Prisma {
     lastName: string
     cardNumber: string
     expiryDate: Date | string
-    userId: number
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -7415,6 +7345,11 @@ export namespace Prisma {
   export type BankCardCreateOrConnectWithoutUserInput = {
     where: BankCardWhereUniqueInput
     create: XOR<BankCardCreateWithoutUserInput, BankCardUncheckedCreateWithoutUserInput>
+  }
+
+  export type BankCardCreateManyUserInputEnvelope = {
+    data: BankCardCreateManyUserInput | BankCardCreateManyUserInput[]
+    skipDuplicates?: boolean
   }
 
   export type DonationCreateWithoutUserInput = {
@@ -7564,32 +7499,36 @@ export namespace Prisma {
     create: XOR<UserCreateWithoutBankCardInput, UserUncheckedCreateWithoutBankCardInput>
   }
 
-  export type UserUpsertWithWhereUniqueWithoutBankCardInput = {
-    where: UserWhereUniqueInput
+  export type UserUpsertWithoutBankCardInput = {
     update: XOR<UserUpdateWithoutBankCardInput, UserUncheckedUpdateWithoutBankCardInput>
     create: XOR<UserCreateWithoutBankCardInput, UserUncheckedCreateWithoutBankCardInput>
+    where?: UserWhereInput
   }
 
-  export type UserUpdateWithWhereUniqueWithoutBankCardInput = {
-    where: UserWhereUniqueInput
+  export type UserUpdateToOneWithWhereWithoutBankCardInput = {
+    where?: UserWhereInput
     data: XOR<UserUpdateWithoutBankCardInput, UserUncheckedUpdateWithoutBankCardInput>
   }
 
-  export type UserUpdateManyWithWhereWithoutBankCardInput = {
-    where: UserScalarWhereInput
-    data: XOR<UserUpdateManyMutationInput, UserUncheckedUpdateManyWithoutBankCardInput>
+  export type UserUpdateWithoutBankCardInput = {
+    email?: StringFieldUpdateOperationsInput | string
+    username?: NullableStringFieldUpdateOperationsInput | string | null
+    password?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    profile?: ProfileUpdateOneWithoutUserNestedInput
+    donations?: DonationUpdateManyWithoutUserNestedInput
   }
 
-  export type UserScalarWhereInput = {
-    AND?: UserScalarWhereInput | UserScalarWhereInput[]
-    OR?: UserScalarWhereInput[]
-    NOT?: UserScalarWhereInput | UserScalarWhereInput[]
-    id?: IntFilter<"User"> | number
-    email?: StringFilter<"User"> | string
-    username?: StringNullableFilter<"User"> | string | null
-    password?: StringFilter<"User"> | string
-    createdAt?: DateTimeFilter<"User"> | Date | string
-    updatedAt?: DateTimeFilter<"User"> | Date | string
+  export type UserUncheckedUpdateWithoutBankCardInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    email?: StringFieldUpdateOperationsInput | string
+    username?: NullableStringFieldUpdateOperationsInput | string | null
+    password?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    profile?: ProfileUncheckedUpdateOneWithoutUserNestedInput
+    donations?: DonationUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserCreateWithoutProfileInput = {
@@ -7692,13 +7631,35 @@ export namespace Prisma {
     data: XOR<UserUpdateManyMutationInput, UserUncheckedUpdateManyWithoutDonationsInput>
   }
 
+  export type UserScalarWhereInput = {
+    AND?: UserScalarWhereInput | UserScalarWhereInput[]
+    OR?: UserScalarWhereInput[]
+    NOT?: UserScalarWhereInput | UserScalarWhereInput[]
+    id?: IntFilter<"User"> | number
+    email?: StringFilter<"User"> | string
+    username?: StringNullableFilter<"User"> | string | null
+    password?: StringFilter<"User"> | string
+    createdAt?: DateTimeFilter<"User"> | Date | string
+    updatedAt?: DateTimeFilter<"User"> | Date | string
+  }
+
+  export type BankCardCreateManyUserInput = {
+    id?: number
+    country: string
+    firstName: string
+    lastName: string
+    cardNumber: string
+    expiryDate: Date | string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
   export type BankCardUpdateWithoutUserInput = {
     country?: StringFieldUpdateOperationsInput | string
     firstName?: StringFieldUpdateOperationsInput | string
     lastName?: StringFieldUpdateOperationsInput | string
     cardNumber?: StringFieldUpdateOperationsInput | string
     expiryDate?: DateTimeFieldUpdateOperationsInput | Date | string
-    userId?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -7710,7 +7671,6 @@ export namespace Prisma {
     lastName?: StringFieldUpdateOperationsInput | string
     cardNumber?: StringFieldUpdateOperationsInput | string
     expiryDate?: DateTimeFieldUpdateOperationsInput | Date | string
-    userId?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -7722,7 +7682,6 @@ export namespace Prisma {
     lastName?: StringFieldUpdateOperationsInput | string
     cardNumber?: StringFieldUpdateOperationsInput | string
     expiryDate?: DateTimeFieldUpdateOperationsInput | Date | string
-    userId?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -7755,36 +7714,6 @@ export namespace Prisma {
     socialURLOrBuyMeACoffee?: StringFieldUpdateOperationsInput | string
     donorId?: IntFieldUpdateOperationsInput | number
     recipientId?: IntFieldUpdateOperationsInput | number
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type UserUpdateWithoutBankCardInput = {
-    email?: StringFieldUpdateOperationsInput | string
-    username?: NullableStringFieldUpdateOperationsInput | string | null
-    password?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    profile?: ProfileUpdateOneWithoutUserNestedInput
-    donations?: DonationUpdateManyWithoutUserNestedInput
-  }
-
-  export type UserUncheckedUpdateWithoutBankCardInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    email?: StringFieldUpdateOperationsInput | string
-    username?: NullableStringFieldUpdateOperationsInput | string | null
-    password?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    profile?: ProfileUncheckedUpdateOneWithoutUserNestedInput
-    donations?: DonationUncheckedUpdateManyWithoutUserNestedInput
-  }
-
-  export type UserUncheckedUpdateManyWithoutBankCardInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    email?: StringFieldUpdateOperationsInput | string
-    username?: NullableStringFieldUpdateOperationsInput | string | null
-    password?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
