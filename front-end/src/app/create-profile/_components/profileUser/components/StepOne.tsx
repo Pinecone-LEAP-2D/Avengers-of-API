@@ -37,84 +37,86 @@ export const StepOneProfileEdit = ({ setStep }: StepOneProfileEditProps) => {
   };
 
   return (
-    <div className="flex items-center justify-center min-h-screen">
-      <div className="w-[510px] h-fit max-w-[672px] m-auto flex flex-col gap-6 p-6 border rounded-xl shadow-md">
-        <Formik
-          initialValues={{ name: "", about: "", media: null }}
-          validationSchema={profileSchema}
-          onSubmit={handleSubmit}
-        >
-          {({ values, setFieldValue, handleChange }) => (
-            <Form className="flex flex-col gap-4">
-              <div>
-                <h1 className="font-bold text-2xl mb-6">
-                  Complete your profile page
-                </h1>
-                <h2 className="mb-2">Add photo</h2>
-                <div className="w-[160px] h-[160px] flex items-center justify-center border-dotted border-2 rounded-full overflow-hidden mb-4">
-                  <Input
-                    id="media"
-                    name="media"
-                    type="file"
-                    accept="image/*"
-                    className="opacity-0 absolute w-[160px] h-[160px] rounded-full cursor-pointer"
-                    onChange={(event) => {
-                      const file = event.currentTarget.files?.[0] || null;
-                      setFieldValue("media", file);
-                      if (file) {
-                        setPreview(URL.createObjectURL(file));
-                      }else{
-                        setPreview(null);
-                      }
-                    }}
-                  />
-                  <label htmlFor="media">
-                    {preview ? (
-                      <img
-                        src={preview}
-                        alt="Preview"
-                        className="rounded-full object-cover w-[160px] h-[160px]"
-                      />
-                    ) : (
-                      <CameraIcon className="text-gray-400 w-8 h-8" />
-                    )}
-                  </label>
-                </div>
-                <ErrorMessage name="media" component="div" className="text-red-700 text-sm"/>
-              </div>
-              <div>
-                <h2 className="mb-1">Name</h2>
-                <Field name="name" as={Input} placeholder="Enter your name" />
-                <ErrorMessage
-                  name="name"
-                  component="div"
-                  className="text-red-700 text-sm"
+    <div className="w-[955px] h-fit p-[20px] flex flex-col gap-[25px]">
+      <Formik
+        initialValues={{ name: "", about: "", media: null }}
+        validationSchema={profileSchema}
+        onSubmit={handleSubmit}
+      >
+        {({ values, setFieldValue, handleChange }) => (
+          <Form className="flex flex-col gap-4">
+            <div>
+              <h1 className="font-bold text-2xl mb-6">
+                Complete your profile page
+              </h1>
+              <h2 className="mb-2">Add photo</h2>
+              <div className="w-[160px] h-[160px] flex items-center justify-center border-dotted border-2 rounded-full overflow-hidden mb-4">
+                <Input
+                  id="media"
+                  name="media"
+                  type="file"
+                  accept="image/*"
+                  className="opacity-0 absolute w-[160px] h-[160px] rounded-full cursor-pointer"
+                  onChange={(event) => {
+                    const file = event.currentTarget.files?.[0] || null;
+                    setFieldValue("media", file);
+                    if (file) {
+                      setPreview(URL.createObjectURL(file));
+                    } else {
+                      setPreview(null);
+                    }
+                  }}
                 />
+                <label htmlFor="media">
+                  {preview ? (
+                    <img
+                      src={preview}
+                      alt="Preview"
+                      className="rounded-full object-cover w-[160px] h-[160px]"
+                    />
+                  ) : (
+                    <CameraIcon className="text-gray-400 w-8 h-8" />
+                  )}
+                </label>
               </div>
+              <ErrorMessage
+                name="media"
+                component="div"
+                className="text-red-700 text-sm"
+              />
+            </div>
+            <div>
+              <h2 className="mb-1">Name</h2>
+              <Field name="name" as={Input} placeholder="Enter your name" />
+              <ErrorMessage
+                name="name"
+                component="div"
+                className="text-red-700 text-sm"
+              />
+            </div>
 
-              <div>
-                <h2 className="mb-1">About</h2>
-                <Field
-                  name="about"
-                  as={Input}
-                  placeholder="Write about yourself"
-                  component="textarea"
-                  className="w-full p-3 border rounded-md resize-none"
-                />
-                <ErrorMessage
-                  name="about"
-                  component="div"
-                  className="text-red-700 text-sm"
-                />
-              </div>
+            <div>
+              <h2 className="mb-1">About</h2>
+              <Field
+                name="about"
+                as={Input}
+                placeholder="Write about yourself"
+                component="textarea"
+                className="w-full p-3 border rounded-md resize-none"
+              />
+              <ErrorMessage
+                name="about"
+                component="div"
+                className="text-red-700 text-sm"
+              />
+            </div>
 
-              <Button type="submit" className="mt-4">
-                Submit
-              </Button>
-            </Form>
-          )}
-        </Formik>
-      </div>
+            <Button type="submit" className="mt-4">
+              Submit
+            </Button>
+          </Form>
+        )}
+      </Formik>
     </div>
   );
 };

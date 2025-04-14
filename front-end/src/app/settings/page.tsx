@@ -1,20 +1,26 @@
+"use client";
 import Header from "@/components/Header";
 import NavBar from "@/components/NavBar";
+import StepOneProfileEdit from "../create-profile/_components/profileUser/components/StepOne";
+import StepTwoProfileEdit from "../create-profile/_components/profileUser/components/StepTwo";
 import SetNewPasswordForm from "./_components/SetPasswordForm";
 
 export default function Settings() {
   return (
-    <div className="min-h-screen flex flex-col">
+    <div className="flex flex-col items-center">
       <Header />
-      <div className="flex flex-1 mt-[60px] px-8 gap-12">
-        {/* Left sidebar */}
-        <div className="w-[220px]">
-          <NavBar location="settings" />
-        </div>
-
-        {/* Right content */}
-        <div className="flex-1 flex justify-center">
-          <SetNewPasswordForm />
+      <div className="flex mt-[60px] gap-[100px]">
+        <NavBar location="settings" />
+        <div>
+          <div>
+            <StepOneProfileEdit />
+          </div>
+          <div className="mt-[60px]">
+            <SetNewPasswordForm />
+          </div>
+          <div className="mt-[60px]">
+            <StepTwoProfileEdit />
+          </div>
         </div>
       </div>
     </div>

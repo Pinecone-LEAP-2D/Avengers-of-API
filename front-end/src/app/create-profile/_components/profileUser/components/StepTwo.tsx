@@ -1,3 +1,4 @@
+"use client";
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Formik, Form, Field, ErrorMessage } from "formik";
@@ -15,7 +16,7 @@ export const StepTwoProfileEdit = () => {
   };
 
   return (
-    <div className="w-full max-w-xl mx-auto flex flex-col gap-6">
+    <div className="w-[955px] h-fit p-[20px] flex flex-col gap-[25px]">
       <h1 className="text-2xl font-bold">How would you like to be paid? </h1>
       <p className="text-gray-600">Enter location and payment details</p>
 
