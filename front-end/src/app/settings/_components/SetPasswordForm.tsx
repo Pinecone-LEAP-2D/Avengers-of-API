@@ -65,7 +65,7 @@ export default function SetNewPasswordForm() {
   };
 
   return (
-    <Card className="max-w-md mx-auto p-6">
+    <Card className="w-[955px] h-fit p-[20px] flex flex-col gap-[25px]">
       <CardContent>
         <h2 className="text-xl font-semibold mb-4">Set a new password</h2>
 
