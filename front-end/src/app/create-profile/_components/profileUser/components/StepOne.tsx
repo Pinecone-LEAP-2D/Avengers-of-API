@@ -6,10 +6,11 @@ import { Formik, Form, Field, ErrorMessage } from "formik";
 import { profileSchema } from "@/utils/profileValidtion";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import jwt from "jsonwebtoken";
+
 type StepOneProfileEditProps = {
   setStep: (step: number) => void;
 };
-import jwt from "jsonwebtoken";
 
 type ProfileInfoTypes = {
   name: string;
@@ -22,55 +23,53 @@ type User = {
   email?: string;
   username?: string;
   userId: number;
-}
+};
 
 export const StepOneProfileEdit = ({ setStep }: StepOneProfileEditProps) => {
   const [preview, setPreview] = useState<string | null>(null);
-  const [user,setUser] = useState<User>({
-    userId: 0
+  const [user, setUser] = useState<User>({
+    userId: 0,
   });
 
-  useEffect(()=>{
-    if(typeof window !== "undefined"){
+  useEffect(() => {
+    if (typeof window !== "undefined") {
       const token = window.localStorage.token;
-      if(token){
+      if (token) {
         const decode = jwt.decode(token) as User;
         setUser(decode);
       }
     }
-  },[]);
+  }, []);
 
   const handleSubmit = async (values: ProfileInfoTypes) => {
-
-    if(!values.media)
-      return;
+    if (!values.media) return;
 
     const formData = new FormData();
-    formData.append('file', values.media);
-    formData.append('upload_preset', 'coffee_pics');
+    formData.append("file", values.media);
+    formData.append("upload_preset", "coffee_pics");
 
-    try{
-      const res = await axios.post("https://api.cloudinary.com/v1_1/dtptrpft2/upload",formData);
-      
+    try {
+      const res = await axios.post(
+        "https://api.cloudinary.com/v1_1/dtptrpft2/upload",
+        formData
+      );
 
-      try{
-        const response = await axios.post("http://localhost:3000/profile/",{
+      try {
+        const response = await axios.post("http://localhost:3000/profile/", {
           name: values.name,
           about: values.about,
           socialMediaURL: values.social,
           avatarImage: res.data.secure_url,
-          userId: user.userId
-        })
+          userId: user.userId,
+        });
         console.log(response);
         setStep(2);
-      }catch(err){
+      } catch (err) {
         console.log(err);
       }
-      
-    }catch(err){
+    } catch (err) {
       console.log("Upload failed");
     }
-
 
     // try {
     //   const response = await axios.post("/api/your-endpoint", formData);
@@ -81,10 +80,10 @@ export const StepOneProfileEdit = ({ setStep }: StepOneProfileEditProps) => {
   };
 
   return (
-    <div className="flex items-center justify-center min-h-screen">
+    <div className="w-auto h-fit gap-[25px] flex items-center justify-center min-h-screen">
       <div className="w-[510px] h-fit max-w-[672px] m-auto flex flex-col gap-6 p-6 border rounded-xl shadow-md">
         <Formik
-          initialValues={{ name: "", about: "", media: null, social: "",}}
+          initialValues={{ name: "", about: "", media: null, social: "" }}
           validationSchema={profileSchema}
           onSubmit={handleSubmit}
         >
@@ -107,7 +106,7 @@ export const StepOneProfileEdit = ({ setStep }: StepOneProfileEditProps) => {
                       setFieldValue("media", file);
                       if (file) {
                         setPreview(URL.createObjectURL(file));
-                      }else{
+                      } else {
                         setPreview(null);
                       }
                     }}
@@ -124,7 +123,11 @@ export const StepOneProfileEdit = ({ setStep }: StepOneProfileEditProps) => {
                     )}
                   </label>
                 </div>
-                <ErrorMessage name="media" component="div" className="text-red-700 text-sm"/>
+                <ErrorMessage
+                  name="media"
+                  component="div"
+                  className="text-red-700 text-sm"
+                />
               </div>
               <div>
                 <h2 className="mb-1">Name</h2>
@@ -154,11 +157,7 @@ export const StepOneProfileEdit = ({ setStep }: StepOneProfileEditProps) => {
 
               <div>
                 <h2 className="mb-1">Social URLs</h2>
-                <Field
-                  name="social"
-                  as={Input}
-                  placeholder="Social URLs"
-                />
+                <Field name="social" as={Input} placeholder="Social URLs" />
                 <ErrorMessage
                   name="social"
                   component="div"
@@ -166,16 +165,16 @@ export const StepOneProfileEdit = ({ setStep }: StepOneProfileEditProps) => {
                 />
               </div>
 
-            <Button type="submit" className="mt-4">
-              Submit
-            </Button>
-          </Form>
-        )}
-      </Formik>
+              <Button type="submit" className="mt-4">
+                Submit
+              </Button>
+            </Form>
+          )}
+        </Formik>
+      </div>
     </div>
-  </div>
-  )
-}
+  );
+};
 
 export default StepOneProfileEdit;
 
