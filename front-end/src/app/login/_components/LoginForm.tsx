@@ -10,6 +10,7 @@ import { Label } from "@/components/ui/label";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import { fetchProfile } from "@/lib/fetchProfile";
 
 const LoginSchema = Yup.object().shape({
   email: Yup.string()
@@ -66,7 +67,13 @@ export default function LoginPage() {
                 })
                 if(response.status === 200){
                   localStorage.setItem("token",response.data.token);
-                  router.push("home");
+                  const res = await fetchProfile(response.data.user.id);
+                  if(res === "No profile"){
+                    router.push("create-profile");
+                  }
+                  else{
+                    router.push("home");
+                  }
                 }
               }catch(err){
                 if (axios.isAxiosError(err)) {

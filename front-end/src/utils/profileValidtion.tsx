@@ -5,6 +5,7 @@ export let profileSchema = object({
   name: string().min(6,"Use at least 6 character").required("Name is required"),
   about: string().min(6,"Use at least 6 character").required("Can't be blank"),
   media: string().required("Please upload profile picture"),
+  social: string().required("Provide your social account link"),
 });
 
 export const secondProfileSchema = Yup.object({
