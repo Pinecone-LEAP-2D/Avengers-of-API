@@ -23,8 +23,11 @@ model User {
   profile   Profile?
   bankCard  BankCard[]
   updatedAt DateTime
-  donations Donation[]
+
+  donationsGiven    Donation[] @relation("DonationsGiven")
+  donationsReceived Donation[] @relation("DonationsReceived")
 }
+
 
 model BankCard {
   id         Int      @id @default(autoincrement())
@@ -62,5 +65,7 @@ model Donation {
   recipientId             Int
   createdAt               DateTime @default(now())
   updatedAt               DateTime @updatedAt
-  User                    User[]
+  donor     User @relation("DonationsGiven", fields: [donorId], references: [id])
+  recipient User @relation("DonationsReceived", fields: [recipientId], references: [id])
 }
+

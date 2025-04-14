@@ -1143,12 +1143,14 @@ export namespace Prisma {
 
   export type UserCountOutputType = {
     bankCard: number
-    donations: number
+    donationsGiven: number
+    donationsReceived: number
   }
 
   export type UserCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     bankCard?: boolean | UserCountOutputTypeCountBankCardArgs
-    donations?: boolean | UserCountOutputTypeCountDonationsArgs
+    donationsGiven?: boolean | UserCountOutputTypeCountDonationsGivenArgs
+    donationsReceived?: boolean | UserCountOutputTypeCountDonationsReceivedArgs
   }
 
   // Custom InputTypes
@@ -1172,39 +1174,15 @@ export namespace Prisma {
   /**
    * UserCountOutputType without action
    */
-  export type UserCountOutputTypeCountDonationsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type UserCountOutputTypeCountDonationsGivenArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: DonationWhereInput
   }
 
-
   /**
-   * Count Type DonationCountOutputType
+   * UserCountOutputType without action
    */
-
-  export type DonationCountOutputType = {
-    User: number
-  }
-
-  export type DonationCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    User?: boolean | DonationCountOutputTypeCountUserArgs
-  }
-
-  // Custom InputTypes
-  /**
-   * DonationCountOutputType without action
-   */
-  export type DonationCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the DonationCountOutputType
-     */
-    select?: DonationCountOutputTypeSelect<ExtArgs> | null
-  }
-
-  /**
-   * DonationCountOutputType without action
-   */
-  export type DonationCountOutputTypeCountUserArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: UserWhereInput
+  export type UserCountOutputTypeCountDonationsReceivedArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: DonationWhereInput
   }
 
 
@@ -1420,7 +1398,8 @@ export namespace Prisma {
     updatedAt?: boolean
     profile?: boolean | User$profileArgs<ExtArgs>
     bankCard?: boolean | User$bankCardArgs<ExtArgs>
-    donations?: boolean | User$donationsArgs<ExtArgs>
+    donationsGiven?: boolean | User$donationsGivenArgs<ExtArgs>
+    donationsReceived?: boolean | User$donationsReceivedArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["user"]>
 
@@ -1455,7 +1434,8 @@ export namespace Prisma {
   export type UserInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     profile?: boolean | User$profileArgs<ExtArgs>
     bankCard?: boolean | User$bankCardArgs<ExtArgs>
-    donations?: boolean | User$donationsArgs<ExtArgs>
+    donationsGiven?: boolean | User$donationsGivenArgs<ExtArgs>
+    donationsReceived?: boolean | User$donationsReceivedArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type UserIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
@@ -1466,7 +1446,8 @@ export namespace Prisma {
     objects: {
       profile: Prisma.$ProfilePayload<ExtArgs> | null
       bankCard: Prisma.$BankCardPayload<ExtArgs>[]
-      donations: Prisma.$DonationPayload<ExtArgs>[]
+      donationsGiven: Prisma.$DonationPayload<ExtArgs>[]
+      donationsReceived: Prisma.$DonationPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: number
@@ -1871,7 +1852,8 @@ export namespace Prisma {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     profile<T extends User$profileArgs<ExtArgs> = {}>(args?: Subset<T, User$profileArgs<ExtArgs>>): Prisma__ProfileClient<$Result.GetResult<Prisma.$ProfilePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     bankCard<T extends User$bankCardArgs<ExtArgs> = {}>(args?: Subset<T, User$bankCardArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$BankCardPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-    donations<T extends User$donationsArgs<ExtArgs> = {}>(args?: Subset<T, User$donationsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$DonationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    donationsGiven<T extends User$donationsGivenArgs<ExtArgs> = {}>(args?: Subset<T, User$donationsGivenArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$DonationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    donationsReceived<T extends User$donationsReceivedArgs<ExtArgs> = {}>(args?: Subset<T, User$donationsReceivedArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$DonationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -2338,9 +2320,33 @@ export namespace Prisma {
   }
 
   /**
-   * User.donations
+   * User.donationsGiven
    */
-  export type User$donationsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type User$donationsGivenArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Donation
+     */
+    select?: DonationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Donation
+     */
+    omit?: DonationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DonationInclude<ExtArgs> | null
+    where?: DonationWhereInput
+    orderBy?: DonationOrderByWithRelationInput | DonationOrderByWithRelationInput[]
+    cursor?: DonationWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: DonationScalarFieldEnum | DonationScalarFieldEnum[]
+  }
+
+  /**
+   * User.donationsReceived
+   */
+  export type User$donationsReceivedArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
      * Select specific fields to fetch from the Donation
      */
@@ -4923,8 +4929,8 @@ export namespace Prisma {
     recipientId?: boolean
     createdAt?: boolean
     updatedAt?: boolean
-    User?: boolean | Donation$UserArgs<ExtArgs>
-    _count?: boolean | DonationCountOutputTypeDefaultArgs<ExtArgs>
+    donor?: boolean | UserDefaultArgs<ExtArgs>
+    recipient?: boolean | UserDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["donation"]>
 
   export type DonationSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -4936,6 +4942,8 @@ export namespace Prisma {
     recipientId?: boolean
     createdAt?: boolean
     updatedAt?: boolean
+    donor?: boolean | UserDefaultArgs<ExtArgs>
+    recipient?: boolean | UserDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["donation"]>
 
   export type DonationSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -4947,6 +4955,8 @@ export namespace Prisma {
     recipientId?: boolean
     createdAt?: boolean
     updatedAt?: boolean
+    donor?: boolean | UserDefaultArgs<ExtArgs>
+    recipient?: boolean | UserDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["donation"]>
 
   export type DonationSelectScalar = {
@@ -4962,16 +4972,23 @@ export namespace Prisma {
 
   export type DonationOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "amount" | "specialMessage" | "socialURLOrBuyMeACoffee" | "donorId" | "recipientId" | "createdAt" | "updatedAt", ExtArgs["result"]["donation"]>
   export type DonationInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    User?: boolean | Donation$UserArgs<ExtArgs>
-    _count?: boolean | DonationCountOutputTypeDefaultArgs<ExtArgs>
+    donor?: boolean | UserDefaultArgs<ExtArgs>
+    recipient?: boolean | UserDefaultArgs<ExtArgs>
   }
-  export type DonationIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
-  export type DonationIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
+  export type DonationIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    donor?: boolean | UserDefaultArgs<ExtArgs>
+    recipient?: boolean | UserDefaultArgs<ExtArgs>
+  }
+  export type DonationIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    donor?: boolean | UserDefaultArgs<ExtArgs>
+    recipient?: boolean | UserDefaultArgs<ExtArgs>
+  }
 
   export type $DonationPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "Donation"
     objects: {
-      User: Prisma.$UserPayload<ExtArgs>[]
+      donor: Prisma.$UserPayload<ExtArgs>
+      recipient: Prisma.$UserPayload<ExtArgs>
     }
     scalars: $Extensions.GetPayloadResult<{
       id: number
@@ -5376,7 +5393,8 @@ export namespace Prisma {
    */
   export interface Prisma__DonationClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
-    User<T extends Donation$UserArgs<ExtArgs> = {}>(args?: Subset<T, Donation$UserArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    donor<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    recipient<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -5663,6 +5681,10 @@ export namespace Prisma {
      */
     data: DonationCreateManyInput | DonationCreateManyInput[]
     skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DonationIncludeCreateManyAndReturn<ExtArgs> | null
   }
 
   /**
@@ -5733,6 +5755,10 @@ export namespace Prisma {
      * Limit how many Donations to update.
      */
     limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DonationIncludeUpdateManyAndReturn<ExtArgs> | null
   }
 
   /**
@@ -5799,30 +5825,6 @@ export namespace Prisma {
      * Limit how many Donations to delete.
      */
     limit?: number
-  }
-
-  /**
-   * Donation.User
-   */
-  export type Donation$UserArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the User
-     */
-    select?: UserSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the User
-     */
-    omit?: UserOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: UserInclude<ExtArgs> | null
-    where?: UserWhereInput
-    orderBy?: UserOrderByWithRelationInput | UserOrderByWithRelationInput[]
-    cursor?: UserWhereUniqueInput
-    take?: number
-    skip?: number
-    distinct?: UserScalarFieldEnum | UserScalarFieldEnum[]
   }
 
   /**
@@ -6015,7 +6017,8 @@ export namespace Prisma {
     updatedAt?: DateTimeFilter<"User"> | Date | string
     profile?: XOR<ProfileNullableScalarRelationFilter, ProfileWhereInput> | null
     bankCard?: BankCardListRelationFilter
-    donations?: DonationListRelationFilter
+    donationsGiven?: DonationListRelationFilter
+    donationsReceived?: DonationListRelationFilter
   }
 
   export type UserOrderByWithRelationInput = {
@@ -6027,7 +6030,8 @@ export namespace Prisma {
     updatedAt?: SortOrder
     profile?: ProfileOrderByWithRelationInput
     bankCard?: BankCardOrderByRelationAggregateInput
-    donations?: DonationOrderByRelationAggregateInput
+    donationsGiven?: DonationOrderByRelationAggregateInput
+    donationsReceived?: DonationOrderByRelationAggregateInput
   }
 
   export type UserWhereUniqueInput = Prisma.AtLeast<{
@@ -6042,7 +6046,8 @@ export namespace Prisma {
     updatedAt?: DateTimeFilter<"User"> | Date | string
     profile?: XOR<ProfileNullableScalarRelationFilter, ProfileWhereInput> | null
     bankCard?: BankCardListRelationFilter
-    donations?: DonationListRelationFilter
+    donationsGiven?: DonationListRelationFilter
+    donationsReceived?: DonationListRelationFilter
   }, "id" | "email" | "username">
 
   export type UserOrderByWithAggregationInput = {
@@ -6242,7 +6247,8 @@ export namespace Prisma {
     recipientId?: IntFilter<"Donation"> | number
     createdAt?: DateTimeFilter<"Donation"> | Date | string
     updatedAt?: DateTimeFilter<"Donation"> | Date | string
-    User?: UserListRelationFilter
+    donor?: XOR<UserScalarRelationFilter, UserWhereInput>
+    recipient?: XOR<UserScalarRelationFilter, UserWhereInput>
   }
 
   export type DonationOrderByWithRelationInput = {
@@ -6254,7 +6260,8 @@ export namespace Prisma {
     recipientId?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
-    User?: UserOrderByRelationAggregateInput
+    donor?: UserOrderByWithRelationInput
+    recipient?: UserOrderByWithRelationInput
   }
 
   export type DonationWhereUniqueInput = Prisma.AtLeast<{
@@ -6269,7 +6276,8 @@ export namespace Prisma {
     recipientId?: IntFilter<"Donation"> | number
     createdAt?: DateTimeFilter<"Donation"> | Date | string
     updatedAt?: DateTimeFilter<"Donation"> | Date | string
-    User?: UserListRelationFilter
+    donor?: XOR<UserScalarRelationFilter, UserWhereInput>
+    recipient?: XOR<UserScalarRelationFilter, UserWhereInput>
   }, "id">
 
   export type DonationOrderByWithAggregationInput = {
@@ -6310,7 +6318,8 @@ export namespace Prisma {
     updatedAt: Date | string
     profile?: ProfileCreateNestedOneWithoutUserInput
     bankCard?: BankCardCreateNestedManyWithoutUserInput
-    donations?: DonationCreateNestedManyWithoutUserInput
+    donationsGiven?: DonationCreateNestedManyWithoutDonorInput
+    donationsReceived?: DonationCreateNestedManyWithoutRecipientInput
   }
 
   export type UserUncheckedCreateInput = {
@@ -6322,7 +6331,8 @@ export namespace Prisma {
     updatedAt: Date | string
     profile?: ProfileUncheckedCreateNestedOneWithoutUserInput
     bankCard?: BankCardUncheckedCreateNestedManyWithoutUserInput
-    donations?: DonationUncheckedCreateNestedManyWithoutUserInput
+    donationsGiven?: DonationUncheckedCreateNestedManyWithoutDonorInput
+    donationsReceived?: DonationUncheckedCreateNestedManyWithoutRecipientInput
   }
 
   export type UserUpdateInput = {
@@ -6333,7 +6343,8 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     profile?: ProfileUpdateOneWithoutUserNestedInput
     bankCard?: BankCardUpdateManyWithoutUserNestedInput
-    donations?: DonationUpdateManyWithoutUserNestedInput
+    donationsGiven?: DonationUpdateManyWithoutDonorNestedInput
+    donationsReceived?: DonationUpdateManyWithoutRecipientNestedInput
   }
 
   export type UserUncheckedUpdateInput = {
@@ -6345,7 +6356,8 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     profile?: ProfileUncheckedUpdateOneWithoutUserNestedInput
     bankCard?: BankCardUncheckedUpdateManyWithoutUserNestedInput
-    donations?: DonationUncheckedUpdateManyWithoutUserNestedInput
+    donationsGiven?: DonationUncheckedUpdateManyWithoutDonorNestedInput
+    donationsReceived?: DonationUncheckedUpdateManyWithoutRecipientNestedInput
   }
 
   export type UserCreateManyInput = {
@@ -6545,11 +6557,10 @@ export namespace Prisma {
     amount: number
     specialMessage: string
     socialURLOrBuyMeACoffee: string
-    donorId: number
-    recipientId: number
     createdAt?: Date | string
     updatedAt?: Date | string
-    User?: UserCreateNestedManyWithoutDonationsInput
+    donor: UserCreateNestedOneWithoutDonationsGivenInput
+    recipient: UserCreateNestedOneWithoutDonationsReceivedInput
   }
 
   export type DonationUncheckedCreateInput = {
@@ -6561,18 +6572,16 @@ export namespace Prisma {
     recipientId: number
     createdAt?: Date | string
     updatedAt?: Date | string
-    User?: UserUncheckedCreateNestedManyWithoutDonationsInput
   }
 
   export type DonationUpdateInput = {
     amount?: IntFieldUpdateOperationsInput | number
     specialMessage?: StringFieldUpdateOperationsInput | string
     socialURLOrBuyMeACoffee?: StringFieldUpdateOperationsInput | string
-    donorId?: IntFieldUpdateOperationsInput | number
-    recipientId?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    User?: UserUpdateManyWithoutDonationsNestedInput
+    donor?: UserUpdateOneRequiredWithoutDonationsGivenNestedInput
+    recipient?: UserUpdateOneRequiredWithoutDonationsReceivedNestedInput
   }
 
   export type DonationUncheckedUpdateInput = {
@@ -6584,7 +6593,6 @@ export namespace Prisma {
     recipientId?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    User?: UserUncheckedUpdateManyWithoutDonationsNestedInput
   }
 
   export type DonationCreateManyInput = {
@@ -6602,8 +6610,6 @@ export namespace Prisma {
     amount?: IntFieldUpdateOperationsInput | number
     specialMessage?: StringFieldUpdateOperationsInput | string
     socialURLOrBuyMeACoffee?: StringFieldUpdateOperationsInput | string
-    donorId?: IntFieldUpdateOperationsInput | number
-    recipientId?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -6902,16 +6908,6 @@ export namespace Prisma {
     userId?: SortOrder
   }
 
-  export type UserListRelationFilter = {
-    every?: UserWhereInput
-    some?: UserWhereInput
-    none?: UserWhereInput
-  }
-
-  export type UserOrderByRelationAggregateInput = {
-    _count?: SortOrder
-  }
-
   export type DonationCountOrderByAggregateInput = {
     id?: SortOrder
     amount?: SortOrder
@@ -6972,9 +6968,17 @@ export namespace Prisma {
     connect?: BankCardWhereUniqueInput | BankCardWhereUniqueInput[]
   }
 
-  export type DonationCreateNestedManyWithoutUserInput = {
-    create?: XOR<DonationCreateWithoutUserInput, DonationUncheckedCreateWithoutUserInput> | DonationCreateWithoutUserInput[] | DonationUncheckedCreateWithoutUserInput[]
-    connectOrCreate?: DonationCreateOrConnectWithoutUserInput | DonationCreateOrConnectWithoutUserInput[]
+  export type DonationCreateNestedManyWithoutDonorInput = {
+    create?: XOR<DonationCreateWithoutDonorInput, DonationUncheckedCreateWithoutDonorInput> | DonationCreateWithoutDonorInput[] | DonationUncheckedCreateWithoutDonorInput[]
+    connectOrCreate?: DonationCreateOrConnectWithoutDonorInput | DonationCreateOrConnectWithoutDonorInput[]
+    createMany?: DonationCreateManyDonorInputEnvelope
+    connect?: DonationWhereUniqueInput | DonationWhereUniqueInput[]
+  }
+
+  export type DonationCreateNestedManyWithoutRecipientInput = {
+    create?: XOR<DonationCreateWithoutRecipientInput, DonationUncheckedCreateWithoutRecipientInput> | DonationCreateWithoutRecipientInput[] | DonationUncheckedCreateWithoutRecipientInput[]
+    connectOrCreate?: DonationCreateOrConnectWithoutRecipientInput | DonationCreateOrConnectWithoutRecipientInput[]
+    createMany?: DonationCreateManyRecipientInputEnvelope
     connect?: DonationWhereUniqueInput | DonationWhereUniqueInput[]
   }
 
@@ -6991,9 +6995,17 @@ export namespace Prisma {
     connect?: BankCardWhereUniqueInput | BankCardWhereUniqueInput[]
   }
 
-  export type DonationUncheckedCreateNestedManyWithoutUserInput = {
-    create?: XOR<DonationCreateWithoutUserInput, DonationUncheckedCreateWithoutUserInput> | DonationCreateWithoutUserInput[] | DonationUncheckedCreateWithoutUserInput[]
-    connectOrCreate?: DonationCreateOrConnectWithoutUserInput | DonationCreateOrConnectWithoutUserInput[]
+  export type DonationUncheckedCreateNestedManyWithoutDonorInput = {
+    create?: XOR<DonationCreateWithoutDonorInput, DonationUncheckedCreateWithoutDonorInput> | DonationCreateWithoutDonorInput[] | DonationUncheckedCreateWithoutDonorInput[]
+    connectOrCreate?: DonationCreateOrConnectWithoutDonorInput | DonationCreateOrConnectWithoutDonorInput[]
+    createMany?: DonationCreateManyDonorInputEnvelope
+    connect?: DonationWhereUniqueInput | DonationWhereUniqueInput[]
+  }
+
+  export type DonationUncheckedCreateNestedManyWithoutRecipientInput = {
+    create?: XOR<DonationCreateWithoutRecipientInput, DonationUncheckedCreateWithoutRecipientInput> | DonationCreateWithoutRecipientInput[] | DonationUncheckedCreateWithoutRecipientInput[]
+    connectOrCreate?: DonationCreateOrConnectWithoutRecipientInput | DonationCreateOrConnectWithoutRecipientInput[]
+    createMany?: DonationCreateManyRecipientInputEnvelope
     connect?: DonationWhereUniqueInput | DonationWhereUniqueInput[]
   }
 
@@ -7033,16 +7045,31 @@ export namespace Prisma {
     deleteMany?: BankCardScalarWhereInput | BankCardScalarWhereInput[]
   }
 
-  export type DonationUpdateManyWithoutUserNestedInput = {
-    create?: XOR<DonationCreateWithoutUserInput, DonationUncheckedCreateWithoutUserInput> | DonationCreateWithoutUserInput[] | DonationUncheckedCreateWithoutUserInput[]
-    connectOrCreate?: DonationCreateOrConnectWithoutUserInput | DonationCreateOrConnectWithoutUserInput[]
-    upsert?: DonationUpsertWithWhereUniqueWithoutUserInput | DonationUpsertWithWhereUniqueWithoutUserInput[]
+  export type DonationUpdateManyWithoutDonorNestedInput = {
+    create?: XOR<DonationCreateWithoutDonorInput, DonationUncheckedCreateWithoutDonorInput> | DonationCreateWithoutDonorInput[] | DonationUncheckedCreateWithoutDonorInput[]
+    connectOrCreate?: DonationCreateOrConnectWithoutDonorInput | DonationCreateOrConnectWithoutDonorInput[]
+    upsert?: DonationUpsertWithWhereUniqueWithoutDonorInput | DonationUpsertWithWhereUniqueWithoutDonorInput[]
+    createMany?: DonationCreateManyDonorInputEnvelope
     set?: DonationWhereUniqueInput | DonationWhereUniqueInput[]
     disconnect?: DonationWhereUniqueInput | DonationWhereUniqueInput[]
     delete?: DonationWhereUniqueInput | DonationWhereUniqueInput[]
     connect?: DonationWhereUniqueInput | DonationWhereUniqueInput[]
-    update?: DonationUpdateWithWhereUniqueWithoutUserInput | DonationUpdateWithWhereUniqueWithoutUserInput[]
-    updateMany?: DonationUpdateManyWithWhereWithoutUserInput | DonationUpdateManyWithWhereWithoutUserInput[]
+    update?: DonationUpdateWithWhereUniqueWithoutDonorInput | DonationUpdateWithWhereUniqueWithoutDonorInput[]
+    updateMany?: DonationUpdateManyWithWhereWithoutDonorInput | DonationUpdateManyWithWhereWithoutDonorInput[]
+    deleteMany?: DonationScalarWhereInput | DonationScalarWhereInput[]
+  }
+
+  export type DonationUpdateManyWithoutRecipientNestedInput = {
+    create?: XOR<DonationCreateWithoutRecipientInput, DonationUncheckedCreateWithoutRecipientInput> | DonationCreateWithoutRecipientInput[] | DonationUncheckedCreateWithoutRecipientInput[]
+    connectOrCreate?: DonationCreateOrConnectWithoutRecipientInput | DonationCreateOrConnectWithoutRecipientInput[]
+    upsert?: DonationUpsertWithWhereUniqueWithoutRecipientInput | DonationUpsertWithWhereUniqueWithoutRecipientInput[]
+    createMany?: DonationCreateManyRecipientInputEnvelope
+    set?: DonationWhereUniqueInput | DonationWhereUniqueInput[]
+    disconnect?: DonationWhereUniqueInput | DonationWhereUniqueInput[]
+    delete?: DonationWhereUniqueInput | DonationWhereUniqueInput[]
+    connect?: DonationWhereUniqueInput | DonationWhereUniqueInput[]
+    update?: DonationUpdateWithWhereUniqueWithoutRecipientInput | DonationUpdateWithWhereUniqueWithoutRecipientInput[]
+    updateMany?: DonationUpdateManyWithWhereWithoutRecipientInput | DonationUpdateManyWithWhereWithoutRecipientInput[]
     deleteMany?: DonationScalarWhereInput | DonationScalarWhereInput[]
   }
 
@@ -7078,16 +7105,31 @@ export namespace Prisma {
     deleteMany?: BankCardScalarWhereInput | BankCardScalarWhereInput[]
   }
 
-  export type DonationUncheckedUpdateManyWithoutUserNestedInput = {
-    create?: XOR<DonationCreateWithoutUserInput, DonationUncheckedCreateWithoutUserInput> | DonationCreateWithoutUserInput[] | DonationUncheckedCreateWithoutUserInput[]
-    connectOrCreate?: DonationCreateOrConnectWithoutUserInput | DonationCreateOrConnectWithoutUserInput[]
-    upsert?: DonationUpsertWithWhereUniqueWithoutUserInput | DonationUpsertWithWhereUniqueWithoutUserInput[]
+  export type DonationUncheckedUpdateManyWithoutDonorNestedInput = {
+    create?: XOR<DonationCreateWithoutDonorInput, DonationUncheckedCreateWithoutDonorInput> | DonationCreateWithoutDonorInput[] | DonationUncheckedCreateWithoutDonorInput[]
+    connectOrCreate?: DonationCreateOrConnectWithoutDonorInput | DonationCreateOrConnectWithoutDonorInput[]
+    upsert?: DonationUpsertWithWhereUniqueWithoutDonorInput | DonationUpsertWithWhereUniqueWithoutDonorInput[]
+    createMany?: DonationCreateManyDonorInputEnvelope
     set?: DonationWhereUniqueInput | DonationWhereUniqueInput[]
     disconnect?: DonationWhereUniqueInput | DonationWhereUniqueInput[]
     delete?: DonationWhereUniqueInput | DonationWhereUniqueInput[]
     connect?: DonationWhereUniqueInput | DonationWhereUniqueInput[]
-    update?: DonationUpdateWithWhereUniqueWithoutUserInput | DonationUpdateWithWhereUniqueWithoutUserInput[]
-    updateMany?: DonationUpdateManyWithWhereWithoutUserInput | DonationUpdateManyWithWhereWithoutUserInput[]
+    update?: DonationUpdateWithWhereUniqueWithoutDonorInput | DonationUpdateWithWhereUniqueWithoutDonorInput[]
+    updateMany?: DonationUpdateManyWithWhereWithoutDonorInput | DonationUpdateManyWithWhereWithoutDonorInput[]
+    deleteMany?: DonationScalarWhereInput | DonationScalarWhereInput[]
+  }
+
+  export type DonationUncheckedUpdateManyWithoutRecipientNestedInput = {
+    create?: XOR<DonationCreateWithoutRecipientInput, DonationUncheckedCreateWithoutRecipientInput> | DonationCreateWithoutRecipientInput[] | DonationUncheckedCreateWithoutRecipientInput[]
+    connectOrCreate?: DonationCreateOrConnectWithoutRecipientInput | DonationCreateOrConnectWithoutRecipientInput[]
+    upsert?: DonationUpsertWithWhereUniqueWithoutRecipientInput | DonationUpsertWithWhereUniqueWithoutRecipientInput[]
+    createMany?: DonationCreateManyRecipientInputEnvelope
+    set?: DonationWhereUniqueInput | DonationWhereUniqueInput[]
+    disconnect?: DonationWhereUniqueInput | DonationWhereUniqueInput[]
+    delete?: DonationWhereUniqueInput | DonationWhereUniqueInput[]
+    connect?: DonationWhereUniqueInput | DonationWhereUniqueInput[]
+    update?: DonationUpdateWithWhereUniqueWithoutRecipientInput | DonationUpdateWithWhereUniqueWithoutRecipientInput[]
+    updateMany?: DonationUpdateManyWithWhereWithoutRecipientInput | DonationUpdateManyWithWhereWithoutRecipientInput[]
     deleteMany?: DonationScalarWhereInput | DonationScalarWhereInput[]
   }
 
@@ -7119,42 +7161,32 @@ export namespace Prisma {
     update?: XOR<XOR<UserUpdateToOneWithWhereWithoutProfileInput, UserUpdateWithoutProfileInput>, UserUncheckedUpdateWithoutProfileInput>
   }
 
-  export type UserCreateNestedManyWithoutDonationsInput = {
-    create?: XOR<UserCreateWithoutDonationsInput, UserUncheckedCreateWithoutDonationsInput> | UserCreateWithoutDonationsInput[] | UserUncheckedCreateWithoutDonationsInput[]
-    connectOrCreate?: UserCreateOrConnectWithoutDonationsInput | UserCreateOrConnectWithoutDonationsInput[]
-    connect?: UserWhereUniqueInput | UserWhereUniqueInput[]
+  export type UserCreateNestedOneWithoutDonationsGivenInput = {
+    create?: XOR<UserCreateWithoutDonationsGivenInput, UserUncheckedCreateWithoutDonationsGivenInput>
+    connectOrCreate?: UserCreateOrConnectWithoutDonationsGivenInput
+    connect?: UserWhereUniqueInput
   }
 
-  export type UserUncheckedCreateNestedManyWithoutDonationsInput = {
-    create?: XOR<UserCreateWithoutDonationsInput, UserUncheckedCreateWithoutDonationsInput> | UserCreateWithoutDonationsInput[] | UserUncheckedCreateWithoutDonationsInput[]
-    connectOrCreate?: UserCreateOrConnectWithoutDonationsInput | UserCreateOrConnectWithoutDonationsInput[]
-    connect?: UserWhereUniqueInput | UserWhereUniqueInput[]
+  export type UserCreateNestedOneWithoutDonationsReceivedInput = {
+    create?: XOR<UserCreateWithoutDonationsReceivedInput, UserUncheckedCreateWithoutDonationsReceivedInput>
+    connectOrCreate?: UserCreateOrConnectWithoutDonationsReceivedInput
+    connect?: UserWhereUniqueInput
   }
 
-  export type UserUpdateManyWithoutDonationsNestedInput = {
-    create?: XOR<UserCreateWithoutDonationsInput, UserUncheckedCreateWithoutDonationsInput> | UserCreateWithoutDonationsInput[] | UserUncheckedCreateWithoutDonationsInput[]
-    connectOrCreate?: UserCreateOrConnectWithoutDonationsInput | UserCreateOrConnectWithoutDonationsInput[]
-    upsert?: UserUpsertWithWhereUniqueWithoutDonationsInput | UserUpsertWithWhereUniqueWithoutDonationsInput[]
-    set?: UserWhereUniqueInput | UserWhereUniqueInput[]
-    disconnect?: UserWhereUniqueInput | UserWhereUniqueInput[]
-    delete?: UserWhereUniqueInput | UserWhereUniqueInput[]
-    connect?: UserWhereUniqueInput | UserWhereUniqueInput[]
-    update?: UserUpdateWithWhereUniqueWithoutDonationsInput | UserUpdateWithWhereUniqueWithoutDonationsInput[]
-    updateMany?: UserUpdateManyWithWhereWithoutDonationsInput | UserUpdateManyWithWhereWithoutDonationsInput[]
-    deleteMany?: UserScalarWhereInput | UserScalarWhereInput[]
+  export type UserUpdateOneRequiredWithoutDonationsGivenNestedInput = {
+    create?: XOR<UserCreateWithoutDonationsGivenInput, UserUncheckedCreateWithoutDonationsGivenInput>
+    connectOrCreate?: UserCreateOrConnectWithoutDonationsGivenInput
+    upsert?: UserUpsertWithoutDonationsGivenInput
+    connect?: UserWhereUniqueInput
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutDonationsGivenInput, UserUpdateWithoutDonationsGivenInput>, UserUncheckedUpdateWithoutDonationsGivenInput>
   }
 
-  export type UserUncheckedUpdateManyWithoutDonationsNestedInput = {
-    create?: XOR<UserCreateWithoutDonationsInput, UserUncheckedCreateWithoutDonationsInput> | UserCreateWithoutDonationsInput[] | UserUncheckedCreateWithoutDonationsInput[]
-    connectOrCreate?: UserCreateOrConnectWithoutDonationsInput | UserCreateOrConnectWithoutDonationsInput[]
-    upsert?: UserUpsertWithWhereUniqueWithoutDonationsInput | UserUpsertWithWhereUniqueWithoutDonationsInput[]
-    set?: UserWhereUniqueInput | UserWhereUniqueInput[]
-    disconnect?: UserWhereUniqueInput | UserWhereUniqueInput[]
-    delete?: UserWhereUniqueInput | UserWhereUniqueInput[]
-    connect?: UserWhereUniqueInput | UserWhereUniqueInput[]
-    update?: UserUpdateWithWhereUniqueWithoutDonationsInput | UserUpdateWithWhereUniqueWithoutDonationsInput[]
-    updateMany?: UserUpdateManyWithWhereWithoutDonationsInput | UserUpdateManyWithWhereWithoutDonationsInput[]
-    deleteMany?: UserScalarWhereInput | UserScalarWhereInput[]
+  export type UserUpdateOneRequiredWithoutDonationsReceivedNestedInput = {
+    create?: XOR<UserCreateWithoutDonationsReceivedInput, UserUncheckedCreateWithoutDonationsReceivedInput>
+    connectOrCreate?: UserCreateOrConnectWithoutDonationsReceivedInput
+    upsert?: UserUpsertWithoutDonationsReceivedInput
+    connect?: UserWhereUniqueInput
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutDonationsReceivedInput, UserUpdateWithoutDonationsReceivedInput>, UserUncheckedUpdateWithoutDonationsReceivedInput>
   }
 
   export type NestedIntFilter<$PrismaModel = never> = {
@@ -7352,30 +7384,62 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
-  export type DonationCreateWithoutUserInput = {
+  export type DonationCreateWithoutDonorInput = {
     amount: number
     specialMessage: string
     socialURLOrBuyMeACoffee: string
-    donorId: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    recipient: UserCreateNestedOneWithoutDonationsReceivedInput
+  }
+
+  export type DonationUncheckedCreateWithoutDonorInput = {
+    id?: number
+    amount: number
+    specialMessage: string
+    socialURLOrBuyMeACoffee: string
     recipientId: number
     createdAt?: Date | string
     updatedAt?: Date | string
   }
 
-  export type DonationUncheckedCreateWithoutUserInput = {
+  export type DonationCreateOrConnectWithoutDonorInput = {
+    where: DonationWhereUniqueInput
+    create: XOR<DonationCreateWithoutDonorInput, DonationUncheckedCreateWithoutDonorInput>
+  }
+
+  export type DonationCreateManyDonorInputEnvelope = {
+    data: DonationCreateManyDonorInput | DonationCreateManyDonorInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type DonationCreateWithoutRecipientInput = {
+    amount: number
+    specialMessage: string
+    socialURLOrBuyMeACoffee: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    donor: UserCreateNestedOneWithoutDonationsGivenInput
+  }
+
+  export type DonationUncheckedCreateWithoutRecipientInput = {
     id?: number
     amount: number
     specialMessage: string
     socialURLOrBuyMeACoffee: string
     donorId: number
-    recipientId: number
     createdAt?: Date | string
     updatedAt?: Date | string
   }
 
-  export type DonationCreateOrConnectWithoutUserInput = {
+  export type DonationCreateOrConnectWithoutRecipientInput = {
     where: DonationWhereUniqueInput
-    create: XOR<DonationCreateWithoutUserInput, DonationUncheckedCreateWithoutUserInput>
+    create: XOR<DonationCreateWithoutRecipientInput, DonationUncheckedCreateWithoutRecipientInput>
+  }
+
+  export type DonationCreateManyRecipientInputEnvelope = {
+    data: DonationCreateManyRecipientInput | DonationCreateManyRecipientInput[]
+    skipDuplicates?: boolean
   }
 
   export type ProfileUpsertWithoutUserInput = {
@@ -7443,20 +7507,20 @@ export namespace Prisma {
     updatedAt?: DateTimeFilter<"BankCard"> | Date | string
   }
 
-  export type DonationUpsertWithWhereUniqueWithoutUserInput = {
+  export type DonationUpsertWithWhereUniqueWithoutDonorInput = {
     where: DonationWhereUniqueInput
-    update: XOR<DonationUpdateWithoutUserInput, DonationUncheckedUpdateWithoutUserInput>
-    create: XOR<DonationCreateWithoutUserInput, DonationUncheckedCreateWithoutUserInput>
+    update: XOR<DonationUpdateWithoutDonorInput, DonationUncheckedUpdateWithoutDonorInput>
+    create: XOR<DonationCreateWithoutDonorInput, DonationUncheckedCreateWithoutDonorInput>
   }
 
-  export type DonationUpdateWithWhereUniqueWithoutUserInput = {
+  export type DonationUpdateWithWhereUniqueWithoutDonorInput = {
     where: DonationWhereUniqueInput
-    data: XOR<DonationUpdateWithoutUserInput, DonationUncheckedUpdateWithoutUserInput>
+    data: XOR<DonationUpdateWithoutDonorInput, DonationUncheckedUpdateWithoutDonorInput>
   }
 
-  export type DonationUpdateManyWithWhereWithoutUserInput = {
+  export type DonationUpdateManyWithWhereWithoutDonorInput = {
     where: DonationScalarWhereInput
-    data: XOR<DonationUpdateManyMutationInput, DonationUncheckedUpdateManyWithoutUserInput>
+    data: XOR<DonationUpdateManyMutationInput, DonationUncheckedUpdateManyWithoutDonorInput>
   }
 
   export type DonationScalarWhereInput = {
@@ -7473,6 +7537,22 @@ export namespace Prisma {
     updatedAt?: DateTimeFilter<"Donation"> | Date | string
   }
 
+  export type DonationUpsertWithWhereUniqueWithoutRecipientInput = {
+    where: DonationWhereUniqueInput
+    update: XOR<DonationUpdateWithoutRecipientInput, DonationUncheckedUpdateWithoutRecipientInput>
+    create: XOR<DonationCreateWithoutRecipientInput, DonationUncheckedCreateWithoutRecipientInput>
+  }
+
+  export type DonationUpdateWithWhereUniqueWithoutRecipientInput = {
+    where: DonationWhereUniqueInput
+    data: XOR<DonationUpdateWithoutRecipientInput, DonationUncheckedUpdateWithoutRecipientInput>
+  }
+
+  export type DonationUpdateManyWithWhereWithoutRecipientInput = {
+    where: DonationScalarWhereInput
+    data: XOR<DonationUpdateManyMutationInput, DonationUncheckedUpdateManyWithoutRecipientInput>
+  }
+
   export type UserCreateWithoutBankCardInput = {
     email: string
     username?: string | null
@@ -7480,7 +7560,8 @@ export namespace Prisma {
     createdAt: Date | string
     updatedAt: Date | string
     profile?: ProfileCreateNestedOneWithoutUserInput
-    donations?: DonationCreateNestedManyWithoutUserInput
+    donationsGiven?: DonationCreateNestedManyWithoutDonorInput
+    donationsReceived?: DonationCreateNestedManyWithoutRecipientInput
   }
 
   export type UserUncheckedCreateWithoutBankCardInput = {
@@ -7491,7 +7572,8 @@ export namespace Prisma {
     createdAt: Date | string
     updatedAt: Date | string
     profile?: ProfileUncheckedCreateNestedOneWithoutUserInput
-    donations?: DonationUncheckedCreateNestedManyWithoutUserInput
+    donationsGiven?: DonationUncheckedCreateNestedManyWithoutDonorInput
+    donationsReceived?: DonationUncheckedCreateNestedManyWithoutRecipientInput
   }
 
   export type UserCreateOrConnectWithoutBankCardInput = {
@@ -7517,7 +7599,8 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     profile?: ProfileUpdateOneWithoutUserNestedInput
-    donations?: DonationUpdateManyWithoutUserNestedInput
+    donationsGiven?: DonationUpdateManyWithoutDonorNestedInput
+    donationsReceived?: DonationUpdateManyWithoutRecipientNestedInput
   }
 
   export type UserUncheckedUpdateWithoutBankCardInput = {
@@ -7528,7 +7611,8 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     profile?: ProfileUncheckedUpdateOneWithoutUserNestedInput
-    donations?: DonationUncheckedUpdateManyWithoutUserNestedInput
+    donationsGiven?: DonationUncheckedUpdateManyWithoutDonorNestedInput
+    donationsReceived?: DonationUncheckedUpdateManyWithoutRecipientNestedInput
   }
 
   export type UserCreateWithoutProfileInput = {
@@ -7538,7 +7622,8 @@ export namespace Prisma {
     createdAt: Date | string
     updatedAt: Date | string
     bankCard?: BankCardCreateNestedManyWithoutUserInput
-    donations?: DonationCreateNestedManyWithoutUserInput
+    donationsGiven?: DonationCreateNestedManyWithoutDonorInput
+    donationsReceived?: DonationCreateNestedManyWithoutRecipientInput
   }
 
   export type UserUncheckedCreateWithoutProfileInput = {
@@ -7549,7 +7634,8 @@ export namespace Prisma {
     createdAt: Date | string
     updatedAt: Date | string
     bankCard?: BankCardUncheckedCreateNestedManyWithoutUserInput
-    donations?: DonationUncheckedCreateNestedManyWithoutUserInput
+    donationsGiven?: DonationUncheckedCreateNestedManyWithoutDonorInput
+    donationsReceived?: DonationUncheckedCreateNestedManyWithoutRecipientInput
   }
 
   export type UserCreateOrConnectWithoutProfileInput = {
@@ -7575,7 +7661,8 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     bankCard?: BankCardUpdateManyWithoutUserNestedInput
-    donations?: DonationUpdateManyWithoutUserNestedInput
+    donationsGiven?: DonationUpdateManyWithoutDonorNestedInput
+    donationsReceived?: DonationUpdateManyWithoutRecipientNestedInput
   }
 
   export type UserUncheckedUpdateWithoutProfileInput = {
@@ -7586,10 +7673,11 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     bankCard?: BankCardUncheckedUpdateManyWithoutUserNestedInput
-    donations?: DonationUncheckedUpdateManyWithoutUserNestedInput
+    donationsGiven?: DonationUncheckedUpdateManyWithoutDonorNestedInput
+    donationsReceived?: DonationUncheckedUpdateManyWithoutRecipientNestedInput
   }
 
-  export type UserCreateWithoutDonationsInput = {
+  export type UserCreateWithoutDonationsGivenInput = {
     email: string
     username?: string | null
     password: string
@@ -7597,9 +7685,10 @@ export namespace Prisma {
     updatedAt: Date | string
     profile?: ProfileCreateNestedOneWithoutUserInput
     bankCard?: BankCardCreateNestedManyWithoutUserInput
+    donationsReceived?: DonationCreateNestedManyWithoutRecipientInput
   }
 
-  export type UserUncheckedCreateWithoutDonationsInput = {
+  export type UserUncheckedCreateWithoutDonationsGivenInput = {
     id?: number
     email: string
     username?: string | null
@@ -7608,39 +7697,108 @@ export namespace Prisma {
     updatedAt: Date | string
     profile?: ProfileUncheckedCreateNestedOneWithoutUserInput
     bankCard?: BankCardUncheckedCreateNestedManyWithoutUserInput
+    donationsReceived?: DonationUncheckedCreateNestedManyWithoutRecipientInput
   }
 
-  export type UserCreateOrConnectWithoutDonationsInput = {
+  export type UserCreateOrConnectWithoutDonationsGivenInput = {
     where: UserWhereUniqueInput
-    create: XOR<UserCreateWithoutDonationsInput, UserUncheckedCreateWithoutDonationsInput>
+    create: XOR<UserCreateWithoutDonationsGivenInput, UserUncheckedCreateWithoutDonationsGivenInput>
   }
 
-  export type UserUpsertWithWhereUniqueWithoutDonationsInput = {
+  export type UserCreateWithoutDonationsReceivedInput = {
+    email: string
+    username?: string | null
+    password: string
+    createdAt: Date | string
+    updatedAt: Date | string
+    profile?: ProfileCreateNestedOneWithoutUserInput
+    bankCard?: BankCardCreateNestedManyWithoutUserInput
+    donationsGiven?: DonationCreateNestedManyWithoutDonorInput
+  }
+
+  export type UserUncheckedCreateWithoutDonationsReceivedInput = {
+    id?: number
+    email: string
+    username?: string | null
+    password: string
+    createdAt: Date | string
+    updatedAt: Date | string
+    profile?: ProfileUncheckedCreateNestedOneWithoutUserInput
+    bankCard?: BankCardUncheckedCreateNestedManyWithoutUserInput
+    donationsGiven?: DonationUncheckedCreateNestedManyWithoutDonorInput
+  }
+
+  export type UserCreateOrConnectWithoutDonationsReceivedInput = {
     where: UserWhereUniqueInput
-    update: XOR<UserUpdateWithoutDonationsInput, UserUncheckedUpdateWithoutDonationsInput>
-    create: XOR<UserCreateWithoutDonationsInput, UserUncheckedCreateWithoutDonationsInput>
+    create: XOR<UserCreateWithoutDonationsReceivedInput, UserUncheckedCreateWithoutDonationsReceivedInput>
   }
 
-  export type UserUpdateWithWhereUniqueWithoutDonationsInput = {
-    where: UserWhereUniqueInput
-    data: XOR<UserUpdateWithoutDonationsInput, UserUncheckedUpdateWithoutDonationsInput>
+  export type UserUpsertWithoutDonationsGivenInput = {
+    update: XOR<UserUpdateWithoutDonationsGivenInput, UserUncheckedUpdateWithoutDonationsGivenInput>
+    create: XOR<UserCreateWithoutDonationsGivenInput, UserUncheckedCreateWithoutDonationsGivenInput>
+    where?: UserWhereInput
   }
 
-  export type UserUpdateManyWithWhereWithoutDonationsInput = {
-    where: UserScalarWhereInput
-    data: XOR<UserUpdateManyMutationInput, UserUncheckedUpdateManyWithoutDonationsInput>
+  export type UserUpdateToOneWithWhereWithoutDonationsGivenInput = {
+    where?: UserWhereInput
+    data: XOR<UserUpdateWithoutDonationsGivenInput, UserUncheckedUpdateWithoutDonationsGivenInput>
   }
 
-  export type UserScalarWhereInput = {
-    AND?: UserScalarWhereInput | UserScalarWhereInput[]
-    OR?: UserScalarWhereInput[]
-    NOT?: UserScalarWhereInput | UserScalarWhereInput[]
-    id?: IntFilter<"User"> | number
-    email?: StringFilter<"User"> | string
-    username?: StringNullableFilter<"User"> | string | null
-    password?: StringFilter<"User"> | string
-    createdAt?: DateTimeFilter<"User"> | Date | string
-    updatedAt?: DateTimeFilter<"User"> | Date | string
+  export type UserUpdateWithoutDonationsGivenInput = {
+    email?: StringFieldUpdateOperationsInput | string
+    username?: NullableStringFieldUpdateOperationsInput | string | null
+    password?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    profile?: ProfileUpdateOneWithoutUserNestedInput
+    bankCard?: BankCardUpdateManyWithoutUserNestedInput
+    donationsReceived?: DonationUpdateManyWithoutRecipientNestedInput
+  }
+
+  export type UserUncheckedUpdateWithoutDonationsGivenInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    email?: StringFieldUpdateOperationsInput | string
+    username?: NullableStringFieldUpdateOperationsInput | string | null
+    password?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    profile?: ProfileUncheckedUpdateOneWithoutUserNestedInput
+    bankCard?: BankCardUncheckedUpdateManyWithoutUserNestedInput
+    donationsReceived?: DonationUncheckedUpdateManyWithoutRecipientNestedInput
+  }
+
+  export type UserUpsertWithoutDonationsReceivedInput = {
+    update: XOR<UserUpdateWithoutDonationsReceivedInput, UserUncheckedUpdateWithoutDonationsReceivedInput>
+    create: XOR<UserCreateWithoutDonationsReceivedInput, UserUncheckedCreateWithoutDonationsReceivedInput>
+    where?: UserWhereInput
+  }
+
+  export type UserUpdateToOneWithWhereWithoutDonationsReceivedInput = {
+    where?: UserWhereInput
+    data: XOR<UserUpdateWithoutDonationsReceivedInput, UserUncheckedUpdateWithoutDonationsReceivedInput>
+  }
+
+  export type UserUpdateWithoutDonationsReceivedInput = {
+    email?: StringFieldUpdateOperationsInput | string
+    username?: NullableStringFieldUpdateOperationsInput | string | null
+    password?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    profile?: ProfileUpdateOneWithoutUserNestedInput
+    bankCard?: BankCardUpdateManyWithoutUserNestedInput
+    donationsGiven?: DonationUpdateManyWithoutDonorNestedInput
+  }
+
+  export type UserUncheckedUpdateWithoutDonationsReceivedInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    email?: StringFieldUpdateOperationsInput | string
+    username?: NullableStringFieldUpdateOperationsInput | string | null
+    password?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    profile?: ProfileUncheckedUpdateOneWithoutUserNestedInput
+    bankCard?: BankCardUncheckedUpdateManyWithoutUserNestedInput
+    donationsGiven?: DonationUncheckedUpdateManyWithoutDonorNestedInput
   }
 
   export type BankCardCreateManyUserInput = {
@@ -7650,6 +7808,26 @@ export namespace Prisma {
     lastName: string
     cardNumber: string
     expiryDate: Date | string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type DonationCreateManyDonorInput = {
+    id?: number
+    amount: number
+    specialMessage: string
+    socialURLOrBuyMeACoffee: string
+    recipientId: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type DonationCreateManyRecipientInput = {
+    id?: number
+    amount: number
+    specialMessage: string
+    socialURLOrBuyMeACoffee: string
+    donorId: number
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -7686,64 +7864,60 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type DonationUpdateWithoutUserInput = {
+  export type DonationUpdateWithoutDonorInput = {
     amount?: IntFieldUpdateOperationsInput | number
     specialMessage?: StringFieldUpdateOperationsInput | string
     socialURLOrBuyMeACoffee?: StringFieldUpdateOperationsInput | string
-    donorId?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    recipient?: UserUpdateOneRequiredWithoutDonationsReceivedNestedInput
+  }
+
+  export type DonationUncheckedUpdateWithoutDonorInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    amount?: IntFieldUpdateOperationsInput | number
+    specialMessage?: StringFieldUpdateOperationsInput | string
+    socialURLOrBuyMeACoffee?: StringFieldUpdateOperationsInput | string
     recipientId?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type DonationUncheckedUpdateWithoutUserInput = {
+  export type DonationUncheckedUpdateManyWithoutDonorInput = {
     id?: IntFieldUpdateOperationsInput | number
     amount?: IntFieldUpdateOperationsInput | number
     specialMessage?: StringFieldUpdateOperationsInput | string
     socialURLOrBuyMeACoffee?: StringFieldUpdateOperationsInput | string
-    donorId?: IntFieldUpdateOperationsInput | number
     recipientId?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type DonationUncheckedUpdateManyWithoutUserInput = {
+  export type DonationUpdateWithoutRecipientInput = {
+    amount?: IntFieldUpdateOperationsInput | number
+    specialMessage?: StringFieldUpdateOperationsInput | string
+    socialURLOrBuyMeACoffee?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    donor?: UserUpdateOneRequiredWithoutDonationsGivenNestedInput
+  }
+
+  export type DonationUncheckedUpdateWithoutRecipientInput = {
     id?: IntFieldUpdateOperationsInput | number
     amount?: IntFieldUpdateOperationsInput | number
     specialMessage?: StringFieldUpdateOperationsInput | string
     socialURLOrBuyMeACoffee?: StringFieldUpdateOperationsInput | string
     donorId?: IntFieldUpdateOperationsInput | number
-    recipientId?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type UserUpdateWithoutDonationsInput = {
-    email?: StringFieldUpdateOperationsInput | string
-    username?: NullableStringFieldUpdateOperationsInput | string | null
-    password?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    profile?: ProfileUpdateOneWithoutUserNestedInput
-    bankCard?: BankCardUpdateManyWithoutUserNestedInput
-  }
-
-  export type UserUncheckedUpdateWithoutDonationsInput = {
+  export type DonationUncheckedUpdateManyWithoutRecipientInput = {
     id?: IntFieldUpdateOperationsInput | number
-    email?: StringFieldUpdateOperationsInput | string
-    username?: NullableStringFieldUpdateOperationsInput | string | null
-    password?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    profile?: ProfileUncheckedUpdateOneWithoutUserNestedInput
-    bankCard?: BankCardUncheckedUpdateManyWithoutUserNestedInput
-  }
-
-  export type UserUncheckedUpdateManyWithoutDonationsInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    email?: StringFieldUpdateOperationsInput | string
-    username?: NullableStringFieldUpdateOperationsInput | string | null
-    password?: StringFieldUpdateOperationsInput | string
+    amount?: IntFieldUpdateOperationsInput | number
+    specialMessage?: StringFieldUpdateOperationsInput | string
+    socialURLOrBuyMeACoffee?: StringFieldUpdateOperationsInput | string
+    donorId?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
