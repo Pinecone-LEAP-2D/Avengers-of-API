@@ -4,9 +4,8 @@ import { Button } from "@/components/ui/button";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import { Input } from "@/components/ui/input";
 import { secondProfileSchema } from "@/utils/profileValidtion";
-import { CountryDrop } from "./countryDrop";
 
-export const StepTwoProfileEdit = () => {
+export const BankCardForm = () => {
   const router = useRouter();
 
   const handleSubmit = async (values: any) => {
@@ -116,17 +115,8 @@ export const StepTwoProfileEdit = () => {
           </Form>
         )}
       </Formik>
-
-      <Button
-        onClick={() => {
-          localStorage.removeItem("step");
-          router.push("/finish");
-        }}
-      >
-        Finish
-      </Button>
     </div>
   );
 };
 
-export default StepTwoProfileEdit;
+export default BankCardForm;
