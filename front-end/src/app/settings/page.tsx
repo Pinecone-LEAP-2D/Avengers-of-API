@@ -1,10 +1,10 @@
 "use client";
 import Header from "@/components/Header";
 import NavBar from "@/components/NavBar";
-import StepOneProfileEdit from "../create-profile/_components/profileUser/components/StepOne";
 import SetNewPasswordForm from "./_components/SetPasswordForm";
 import SuccessPage from "./_components/SuccessPage";
 import BankCardForm from "./_components/BankCardForm";
+import ProfileEdit from "./_components/ProfileForm";
 
 export default function Settings() {
   return (
@@ -16,22 +16,24 @@ export default function Settings() {
           <h1 className="text-2xl font-bold mb-8">My Account</h1>
           <div className="bg-white rounded-lg border border-gray-200 overflow-hidden">
             <div className="p-4 [&_h1]:hidden">
-              <h2 className="pl-5 text-lg font-bold">Personal Info</h2>
-              <StepOneProfileEdit />
+              <h2 className="pl-5 pt-5 text-lg font-bold">Personal Info</h2>
+              <div className="p-5">
+                <ProfileEdit />
+              </div>
             </div>
           </div>
           <div className="mt-6 g-white rounded-lg border border-gray-200 overflow-hidden">
-            <div className="p-4">
+            <div className="p-5">
               <SetNewPasswordForm />
             </div>
           </div>
           <div className="mt-6 g-white rounded-lg border border-gray-200 overflow-hidden">
-            <div className="p-4">
+            <div className="p-5">
               <BankCardForm />
             </div>
           </div>
           <div className="mt-6 g-white rounded-lg border border-gray-200 overflow-hidden">
-            <div className="p-4">
+            <div className="p-5">
               <SuccessPage />
             </div>
           </div>
