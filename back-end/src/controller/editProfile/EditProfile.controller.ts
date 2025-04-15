@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import prisma from "../../../prismaClient";
-import bcrypt from "bcryptjs"; // If password needs hashing
+import bcrypt from "bcrypt"; // If password needs hashing
 
 export const EditProfileController = async (req: Request, res: Response) => {
   const {

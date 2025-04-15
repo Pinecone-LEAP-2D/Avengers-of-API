@@ -10,22 +10,34 @@ import {
     SelectTrigger,
     SelectValue,
   } from "@/components/ui/select"
+import { useRouter } from "next/navigation";
+import jwt from "jsonwebtoken";
 
 export default function HomeMenu(){
 
-    const [user,setUser] = useState({
-        id: "1234-2136-6231-6533",
-        username: "xhz",
-        pfp: "https://cdn.buymeacoffee.com/uploads/cover_images/2023/06/f9ed63251a832c6db79ed2e80400da09.jpg@2560w_0e.webp",
-        about: "Iaskaljewiopi",
-        recents: [],
-      });
+    const [user,setUser] = useState({});
+    const [profile, setProfile] = useState({
+        name: '',
+        about: '',
+        socialMediaURL: '',
+        backgroundImage: '',
+        avatarImage: ''
+    });
     const [copyState, setCopyState] = useState(false);
     const [origin, setOrigin] = useState('');
+    const router = useRouter();
 
     useEffect(()=>{
         if(typeof window !== undefined){
             setOrigin(window.location.origin);
+            const token = window.localStorage.token;
+            if(token){
+                const decode = jwt.decode(token);
+                if(decode)
+                    setUser(decode);
+            }else{
+                router.push("login");
+            }
         }
     },[])
 
