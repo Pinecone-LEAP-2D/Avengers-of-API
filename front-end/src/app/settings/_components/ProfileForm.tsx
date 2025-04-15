@@ -64,7 +64,7 @@ export const ProfileEdit = () => {
   };
 
   return (
-    <div className="w-auto h-fit gap-[25px] flex flex-col">
+    <div className="w-auto h-fit gap-[26px] flex flex-col">
       <Formik
         initialValues={{ name: "", about: "", media: null, social: "" }}
         validationSchema={profileSchema}
