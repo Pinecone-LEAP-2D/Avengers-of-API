@@ -138,3 +138,10 @@ button{
   opacity: .7;
   font-weight: 300;
 }
+
+.coffeeInput:focus::placeholder{
+  opacity: 0;
+}
+.coffeeInput::placeholder{
+  font-weight: 500;
+}

@@ -25,7 +25,7 @@ const CoffeeLoading = () => {
       <div className="flex flex-col items-center justify-center h-[calc(100vh-250px)] bg-white">
         {/* Coffee beans animation */}
         <div className="flex">
-          <img src="./coffee-loading.gif" alt="" />
+          <img src="../coffee-loading.gif" alt="" />
           {/* <div className="w-20 h-25 bg-[url('/coffee-bean.png')] bg-contain bg-no-repeat animate-bounce [animation-delay:0s]"></div>
           <div className="w-20 h-25 bg-[url('/coffee-bean.png')] bg-contain bg-no-repeat animate-bounce [animation-delay:0.2s] "></div>
           <div className="w-20 h-25 bg-[url('/coffee-bean.png')] bg-contain bg-no-repeat animate-bounce [animation-delay:0.4s] "></div> */}

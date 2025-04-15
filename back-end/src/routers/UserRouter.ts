@@ -8,7 +8,7 @@ import { validateUserName } from "../middlewares/userLogin/validationUserName";
 
 export const UserRouter = express.Router();
 
-UserRouter.get("/", () => {});
+// UserRouter.get("/", () => {});
 UserRouter.post(
   "/sign-up",
   validateUserName,
@@ -16,4 +16,4 @@ UserRouter.post(
   validatePassword,
   asyncHandler(CreateUserController)
 );
-UserRouter.get("/sign-up", asyncHandler(GetUserController));
+UserRouter.get("/", GetUserController);

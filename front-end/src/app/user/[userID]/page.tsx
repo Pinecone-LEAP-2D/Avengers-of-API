@@ -1,7 +1,7 @@
 "use client";
 
 import { useParams } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Heart, Coffee } from "lucide-react";
 import Header from "@/components/Header";
 import {
@@ -11,6 +11,11 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { QRCodeCanvas } from "qrcode.react";
+import axios from "axios";
+import { fetchProfile } from "@/lib/fetchProfile";
+import Link from "next/link";
+import CoffeeLoading from "@/components/CoffeeLoading";
+import NotFound from "@/components/NotFound";
 
 export default function User() {
   const [user, setUser] = useState({
@@ -23,41 +28,98 @@ export default function User() {
     socials: [],
     recents: [],
   });
-  const [coffeeCount, setCoffeeCount] = useState(1);
+  const [profile, setProfile] = useState({
+    name: '',
+    about: '',
+    socialMediaURL: '',
+    backgroundImage: '',
+    avatarImage: ''
+  });
+  const [coffeeCount, setCoffeeCount] = useState(0);
   const [isMonthly, setIsMonthly] = useState(false);
+  const [notFound, setNotFound] = useState(false);
+  const [isLoading, setLoading] = useState(true);
+
 
   const params = useParams();
   const { userID } = params;
 
+
+
+  useEffect(()=>{
+    
+    const fetchAll = async() => {
+      try{
+        const response = await axios.get(`http://localhost:3000/user/?username=${userID}`);
+        const userid = response.data.id;
+        const profile = await fetchProfile(userid);
+        console.log(profile);
+        if(typeof profile == "string" || profile === undefined){
+          setNotFound(true);
+        }else{
+          setLoading(false);
+          setProfile(profile);
+        }
+      }catch(err){
+        setNotFound(true);
+      }
+    }
+    
+    fetchAll()
+  },[]);
+
   const changeCoffeeAmount = (e: React.ChangeEvent<HTMLInputElement>) => {
+
+    console.log(e);
+    
+    if(Number(e.target.value) < 0){
+      setCoffeeCount(0);
+    }else if(Number(e.target.value) > 50000){
+    }else
     setCoffeeCount(Number(e.target.value));
   };
+  const handleCoffeeKey = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    const disallowedKeys = ['e', 'E', '+', '-', '.'];
+
+    if (disallowedKeys.includes(e.key)) {
+      e.preventDefault();
+      return;
+    }
+  }
   const changeToMonthly = (e: React.ChangeEvent<HTMLInputElement>) => {
     setIsMonthly(e.target.checked);
   };
 
-  console.log(isMonthly);
+  
 
-  return (
+  return notFound ? (
+    <NotFound />
+  ) : isLoading ? (
+    <CoffeeLoading />
+  ) : (
     <div className="w-screen min-h-screen flex flex-col items-center bg-[#EEEEEE] font-light">
       <Header />
       <div className="w-screen h-[40vh]">
-        <img src={user.cover} className="w-full h-full object-cover" />
+        {profile.backgroundImage ? (
+          <img src={profile.backgroundImage} className="w-full h-full object-cover" />
+        ) : (
+          <div className="w-full h-full bg-gray-700"></div>
+        )}
       </div>
       <div className="flex w-[1040px] justify-between mt-[-80px]">
         <div className="w-[500px] flex flex-col gap-[20px]">
           <div className="bg-white rounded-[20px] h-fit p-[25px]">
             <div className="flex gap-[15px] items-center border-b-[.5px] border-[#DDDDDD] pb-[20px]">
               <div className="w-[30px] h-[30px] rounded-full overflow-hidden">
-                <img src={user.pfp} className="w-full h-full object-cover" />
+                <img src={profile.avatarImage} className="w-full h-full object-cover" />
               </div>
-              <div className="text-[22px] font-semibold">{user.username}</div>
+              <div className="text-[22px] font-semibold">{profile.name}</div>
             </div>
             <div className="flex flex-col py-[20px] gap-[20px]">
               <div className="font-semibold text-[19px]">
-                About {user.username}
+                About {profile.name}
               </div>
-              <div className="">{user.about}</div>
+              <div className="">{profile.about}</div>
             </div>
           </div>
           <div className="bg-white rounded-[20px] h-fit p-[20px]">
@@ -65,13 +127,7 @@ export default function User() {
               <div className="font-semibold pb-[10px] text-[19px]">
                 Social media URL
               </div>
-              <div className="flex flex-col">
-                {user.socials.length ? (
-                  user.socials.map((el, index) => <div key={index}>{el}</div>)
-                ) : (
-                  <div className="text-gray-400 text-[16px]">Nothing here</div>
-                )}
-              </div>
+              <Link href={profile.socialMediaURL.startsWith("https://") ? profile.socialMediaURL : "https://"+profile.socialMediaURL} target="_blank">{profile.socialMediaURL}</Link>
             </div>
           </div>
           <div className="bg-white rounded-[20px] h-fit p-[20px]">
@@ -87,7 +143,7 @@ export default function User() {
                     <div className="flex flex-col items-center gap-[20px]">
                       <Heart fill="black" />
                       <div className="font-semibold">
-                        Be the first one to support {user.username}
+                        Be the first one to support {profile.name}
                       </div>
                     </div>
                   </div>
@@ -98,7 +154,7 @@ export default function User() {
         </div>
         <div className="w-[500px] rounded-[20px] bg-white p-[25px] h-fit flex flex-col">
           <div className="text-[22px] font-bold">
-            Buy {user.username} a Coffee
+            Buy {profile.name} a Coffee
           </div>
           <div className="mt-[25px] w-full flex flex-col items-center justify-center border border-orange-400 py-[10px] rounded-[10px] bg-orange-100/20">
             <div className="flex items-center gap-[20px]">
@@ -136,9 +192,13 @@ export default function User() {
               </div>
               <input
                 type="number"
-                className="w-[50px] h-[50px] outline-none border rounded-[5px] border-gray-300 text-center text-[24px] font-semibold"
-                value={coffeeCount}
+                min={1}
+                max={50000}
+                className="w-[50px] h-[50px] outline-none border rounded-[12px] border-gray-300 text-center text-[24px] font-semibold coffeeInput"
+                placeholder="10"
+                value={coffeeCount > 0 ? coffeeCount : "" }
                 onChange={changeCoffeeAmount}
+                onKeyDown={handleCoffeeKey}
               />
             </div>
           </div>
@@ -156,7 +216,7 @@ export default function User() {
             <div className="text-[18px] font-semibold">Special message</div>
             <textarea
               className="outline-none border rounded-[5px] resize-none h-fit min-h-[140px] p-[10px] border-gray-300 focus:border-orange-400"
-              placeholder={`Send your special thanks to ${user.username}`}
+              placeholder={`Send your special thanks to ${profile.name}`}
             />
           </div>
           <div className="mt-[20px] flex gap-[5px] items-center">
@@ -200,14 +260,14 @@ export default function User() {
                 className="bg-orange-400 text-white rounded-full w-full h-[40px] font-semibold mt-[20px]"
                 onClick={() => {}}
               >
-                Support ${5 * coffeeCount}
+                Support ${coffeeCount}
                 {isMonthly && " / month"}
               </button>
             </DialogTrigger>
 
             <DialogContent className="flex flex-col items-center text-center w-fit p-[50px] gap-[50px]">
               <DialogTitle className="text-[25px] font-semibold flex flex-col gap-[15px]">
-                Scan QR code ${coffeeCount * 5}
+                Scan QR code ${coffeeCount}
                 <p className="text-sm text-muted-foreground font-light">
                   Scan the QR code to complete your donation
                 </p>
