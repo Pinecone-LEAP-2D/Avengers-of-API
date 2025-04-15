@@ -80,8 +80,8 @@ export const StepOneProfileEdit = ({ setStep }: StepOneProfileEditProps) => {
   };
 
   return (
-    <div className="w-[650px] h-fit gap-[25px] flex items-center justify-center min-h-screen">
-      <div className="w-[510px] h-fit max-w-[672px] m-auto flex flex-col gap-6 p-6 border rounded-xl shadow-md">
+    <div className="w-auto h-fit p-[20px] flex flex-col gap-[25px]">
+      <div className="w-[510px] h-fit max-w-[672px] m-auto flex flex-col gap-6 p-6">
         <Formik
           initialValues={{ name: "", about: "", media: null, social: "" }}
           validationSchema={profileSchema}
