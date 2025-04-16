@@ -2,7 +2,6 @@
 import Header from "@/components/Header";
 import ExploreMenu from "./_components/ExploreMenu";
 import NavBar from "@/components/NavBar";
-import ShowUserExploreMenu from "./_components/ShowUsersExploreMenu";
 
 export default function Home() {
   return (
@@ -12,7 +11,6 @@ export default function Home() {
         <NavBar location="explore" />
         <div>
           <ExploreMenu />
-          <ShowUserExploreMenu />
         </div>
       </div>
     </div>
