@@ -12,6 +12,8 @@ import {
   } from "@/components/ui/select"
 import { useRouter } from "next/navigation";
 import jwt from "jsonwebtoken";
+import { fetchProfile } from "@/lib/fetchProfile";
+import CoffeeLoading from "@/components/CoffeeLoading";
 
 export default function HomeMenu(){
 
@@ -39,7 +41,27 @@ export default function HomeMenu(){
                 router.push("login");
             }
         }
-    },[])
+
+    },[]);
+
+    useEffect(()=>{
+        const fetchAll = async() => {
+            
+            const profile = await fetchProfile(user.userId);
+            
+            
+            if(profile === "No profile"){
+                // router.push("create-profile");
+            }else{
+                setProfile(profile);
+            }
+        }
+
+        if(user){
+            fetchAll();
+        }
+
+    },[user]);
 
     const handleCopyButton = () => {
         navigator.clipboard.writeText(`${origin}/user/${user.username}`);
@@ -49,16 +71,22 @@ export default function HomeMenu(){
         }, (2000));
     }
     
-    return(
+    return !profile.name ? (
+        <div className="w-[955px] h-fit px-[20px]">
+            <div className="w-full h-[280px] rounded-[8px] bg-gray-100"></div>
+            <div className="w-full h-[400px] rounded-[8px] bg-gray-100 mt-[50px]"></div>
+        </div>
+    ) :
+    (
         <div className="w-[955px] h-fit px-[20px]">
             <div className="w-full border border-gray-300 rounded-[8px] p-[25px]">
                 <div className="w-full border-b-[1px] pb-[15px] border-gray-300 flex justify-between">
                     <div className="flex gap-[15px] mt-[10px]">
                         <div className="w-[40px] h-[40px] overflow-hidden rounded-full">
-                            <img src={user.pfp} className="w-full h-full object-cover"/>
+                            <img src={profile.avatarImage} className="w-full h-full object-cover"/>
                         </div>
                         <div className="flex flex-col mt-[-5px]">
-                            <div className="font-semibold">{user.username}</div>
+                            <div className="font-semibold">{profile.name}</div>
                             <a href={`${origin}/user/${user.username}`} className="underline text-[14px]">buymeacoffee.com/user/{user.username}</a>
                         </div>
                     </div>

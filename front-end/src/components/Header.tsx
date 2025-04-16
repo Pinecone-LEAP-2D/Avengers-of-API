@@ -45,7 +45,7 @@ export default function Header() {
           <DropdownMenuContent className="flex flex-col items-center">
           <DropdownMenuLabel>{user?.username}</DropdownMenuLabel>
           <DropdownMenuItem>
-            <div className="cursor-pointer" onClick={()=>{router.push("login")}}>Log out</div>
+            <div className="cursor-pointer" onClick={()=>{router.push("../login")}}>Log out</div>
           </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>

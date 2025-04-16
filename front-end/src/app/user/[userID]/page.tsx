@@ -1,6 +1,6 @@
 "use client";
 
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { Heart, Coffee } from "lucide-react";
 import Header from "@/components/Header";
@@ -9,6 +9,7 @@ import {
   DialogContent,
   DialogTitle,
   DialogTrigger,
+  DialogClose,
 } from "@/components/ui/dialog";
 import { QRCodeCanvas } from "qrcode.react";
 import axios from "axios";
@@ -16,24 +17,17 @@ import { fetchProfile } from "@/lib/fetchProfile";
 import Link from "next/link";
 import CoffeeLoading from "@/components/CoffeeLoading";
 import NotFound from "@/components/NotFound";
+import jwt, { JwtPayload } from "jsonwebtoken";
 
 export default function User() {
-  const [user, setUser] = useState({
-    id: "1234-2136-6231-6533",
-    username: "xhz",
-    cover:
-      "https://cdn.buymeacoffee.com/uploads/cover_images/2023/06/f9ed63251a832c6db79ed2e80400da09.jpg@2560w_0e.webp",
-    pfp: "https://cdn.buymeacoffee.com/uploads/cover_images/2023/06/f9ed63251a832c6db79ed2e80400da09.jpg@2560w_0e.webp",
-    about: "Iaskaljewiopi",
-    socials: [],
-    recents: [],
-  });
+  const [user, setUser] = useState({});
   const [profile, setProfile] = useState({
     name: '',
     about: '',
     socialMediaURL: '',
     backgroundImage: '',
-    avatarImage: ''
+    avatarImage: '',
+    userId: 0,
   });
   const [coffeeCount, setCoffeeCount] = useState(0);
   const [isMonthly, setIsMonthly] = useState(false);
@@ -43,6 +37,7 @@ export default function User() {
 
   const params = useParams();
   const { userID } = params;
+  const router = useRouter();
 
 
 
@@ -64,13 +59,21 @@ export default function User() {
         setNotFound(true);
       }
     }
+
+    if(typeof window !== undefined){
+      const token = window.localStorage.token;
+      if(token){
+        const decode = jwt.decode(token) as JwtPayload;
+        setUser(decode);
+      }else{
+        router.push("login");
+      }
+    }
     
     fetchAll()
   },[]);
 
   const changeCoffeeAmount = (e: React.ChangeEvent<HTMLInputElement>) => {
-
-    console.log(e);
     
     if(Number(e.target.value) < 0){
       setCoffeeCount(0);
@@ -90,7 +93,6 @@ export default function User() {
     setIsMonthly(e.target.checked);
   };
 
-  
 
   return notFound ? (
     <NotFound />
@@ -136,7 +138,7 @@ export default function User() {
                 Recent supporters
               </div>
               <div className="flex flex-col">
-                {user.recents.length ? (
+                {/* {user.recents.length ? (
                   user.recents.map((el, index) => <div key={index}>{el}</div>)
                 ) : (
                   <div className="w-full h-[160px] mt-[15px] border border-gray-300 rounded-[8px] flex justify-center items-center">
@@ -147,7 +149,7 @@ export default function User() {
                       </div>
                     </div>
                   </div>
-                )}
+                )} */}
               </div>
             </div>
           </div>
@@ -257,17 +259,17 @@ export default function User() {
           <Dialog>
             <DialogTrigger asChild>
               <button
-                className="bg-orange-400 text-white rounded-full w-full h-[40px] font-semibold mt-[20px]"
-                onClick={() => {}}
+                className={`text-white rounded-full w-full h-[40px] font-semibold mt-[20px] ${user.userId === profile.userId ? "bg-gray-400/50 cursor-not-allowed" : "bg-orange-400"}`}
+                disabled={user.userId === profile.userId}
               >
-                Support ${coffeeCount}
+                Support ${coffeeCount === 0 ? 1 : coffeeCount}
                 {isMonthly && " / month"}
               </button>
             </DialogTrigger>
 
             <DialogContent className="flex flex-col items-center text-center w-fit p-[50px] gap-[50px]">
               <DialogTitle className="text-[25px] font-semibold flex flex-col gap-[15px]">
-                Scan QR code ${coffeeCount}
+                Scan QR code ${coffeeCount === 0 ? 1 : coffeeCount}
                 <p className="text-sm text-muted-foreground font-light">
                   Scan the QR code to complete your donation
                 </p>
@@ -281,6 +283,7 @@ export default function User() {
                 value="https://www.streamhub.com/wasteland7"
                 size={200}
               />
+              <button className="border px-[30px] py-[5px] bg-black text-white rounded-[10px] text-[20px]">Send</button>
             </DialogContent>
           </Dialog>
         </div>
