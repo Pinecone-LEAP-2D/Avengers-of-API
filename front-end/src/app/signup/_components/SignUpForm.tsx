@@ -13,11 +13,10 @@ import { useRouter } from "next/navigation";
 
 export default function SignUpPage() {
   const [step, setStep] = useState(1);
-  const [usernameInput, setUsernameInput] = useState('');
+  const [usernameInput, setUsernameInput] = useState("");
   const [usernameError, setUsernameError] = useState(false);
 
   const router = useRouter();
-  
 
   return (
     <div className="flex h-screen">
@@ -61,11 +60,32 @@ export default function SignUpPage() {
 
           {step === 1 ? (
             <div className="w-[384px] flex flex-col gap-[20px]">
-              <input type="text" name="username" className="text-[15px] outline-0 focus:outline-[4px] transition-all duration-[.3s] border-1px rounded-md border-[1px] w-full h-[36px] py-[4px] px-[12px]" placeholder="Enter username here" onChange={(e)=>{setUsernameError(false); setUsernameInput(e.target.value)}} value={usernameInput}/>
+              <input
+                type="text"
+                name="username"
+                className="text-[15px] outline-0 focus:outline-[4px] transition-all duration-[.3s] border-1px rounded-md border-[1px] w-full h-[36px] py-[4px] px-[12px]"
+                placeholder="Enter username here"
+                onChange={(e) => {
+                  setUsernameError(false);
+                  setUsernameInput(e.target.value);
+                }}
+                value={usernameInput}
+              />
               {usernameError && (
-                <div className="asbolute text-red-400 text-[14px] mt-[-20px]">Username need to be at least 3 characters</div>
+                <div className="asbolute text-red-400 text-[14px] mt-[-20px]">
+                  Username need to be at least 3 characters
+                </div>
               )}
-              <button className="w-full bg-black rounded-md text-white h-[36px]" onClick={()=>{usernameInput.length < 3 ? setUsernameError(true) : setStep(2)}}>Continue</button>
+              <button
+                className="w-full bg-black rounded-md text-white h-[36px]"
+                onClick={() => {
+                  usernameInput.length < 3
+                    ? setUsernameError(true)
+                    : setStep(2);
+                }}
+              >
+                Continue
+              </button>
             </div>
           ) : (
             // Step 2: Email & Password Form
@@ -77,12 +97,21 @@ export default function SignUpPage() {
                   .min(6, "Minimum 6 characters")
                   .required("Required"),
               })}
-              onSubmit={async(values) => {
-                console.log("User Registered:", values.email, usernameInput,values.password);
-                try{
-                  await axios.post("http://localhost:3000/user/sign-up",{email: values.email, username: usernameInput, password: values.password});
+              onSubmit={async (values) => {
+                console.log(
+                  "User Registered:",
+                  values.email,
+                  usernameInput,
+                  values.password
+                );
+                try {
+                  await axios.post("http://localhost:3000/user/sign-up", {
+                    email: values.email,
+                    username: usernameInput,
+                    password: values.password,
+                  });
                   router.push("login");
-                }catch(err){
+                } catch (err) {
                   console.log(err);
                 }
               }}

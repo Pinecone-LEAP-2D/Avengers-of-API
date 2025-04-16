@@ -17,13 +17,12 @@ const LoginSchema = Yup.object().shape({
     .email("Please enter a valid email")
     .required("Please enter a email"),
   password: Yup.string()
-    .min(6, "Minimum 6 characters")
+    .min(8, "Minimum 8 characters")
     .required("Please enter a password"),
 });
 
 export default function LoginPage() {
-
-  const [error,setError] = useState<String | null>(null);
+  const [error, setError] = useState<String | null>(null);
   const router = useRouter();
   return (
     <div className="flex h-screen">
@@ -41,7 +40,7 @@ export default function LoginPage() {
           </p>
         </div>
       </div>
-      
+
       <div className="w-1/2 flex flex-col justify-center items-center p-10 relative">
         <div className="absolute top-16 right-20">
           <Link href="/signup">
@@ -53,35 +52,41 @@ export default function LoginPage() {
 
         <div className="w-full max-w-sm">
           <h2 className="text-2xl font-bold mb-6">Welcome back</h2>
-          {error &&(
-            <div className="w-full h-fit border border-red-400 px-[10px] py-[5px] rounded-[5px] text-red-400 mb-[10px] text-[15px] bg-red-100/50">{error}</div>
+          {error && (
+            <div className="w-full h-fit border border-red-400 px-[10px] py-[5px] rounded-[5px] text-red-400 mb-[10px] text-[15px] bg-red-100/50">
+              {error}
+            </div>
           )}
           <Formik
             initialValues={{ email: "", password: "" }}
             validationSchema={LoginSchema}
-            onSubmit={async(values) => {
-              try{
-                const response = await axios.post("http://localhost:3000/user/login",{
-                  email: values.email,
-                  password: values.password
-                })
-                if(response.status === 200){
-                  localStorage.setItem("token",response.data.token);
-                  const res = await fetchProfile(response.data.user.id);
-                  if(res === "No profile"){
-                    router.push("create-profile");
+            onSubmit={async (values) => {
+              try {
+                const response = await axios.post(
+                  "http://localhost:3000/user/login",
+                  {
+                    email: values.email,
+                    password: values.password,
                   }
-                  else{
+                );
+                if (response.status === 200) {
+                  localStorage.setItem("token", response.data.token);
+                  const res = await fetchProfile(response.data.user.id);
+                  if (res === "No profile") {
+                    router.push("create-profile");
+                  } else {
                     router.push("home");
                   }
                 }
-              }catch(err){
+              } catch (err) {
                 if (axios.isAxiosError(err)) {
-                  const errorMessage = err.response?.data?.message || "Login failed. Please try again.";
+                  const errorMessage =
+                    err.response?.data?.message ||
+                    "Login failed. Please try again.";
                   setError(errorMessage);
                 } else {
                   setError("An unexpected error occurred.");
-                }             
+                }
               }
             }}
           >
