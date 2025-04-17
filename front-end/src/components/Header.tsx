@@ -11,6 +11,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 import { useRouter } from "next/navigation";
+import { fetchProfile } from "@/lib/fetchProfile";
 
 type User = {
   email: string;
@@ -19,6 +20,7 @@ type User = {
 
 export default function Header() {
   const [user, setUser] = useState<User | null>(null);
+  const [avatar, setAvatar] = useState('../coffee-bean.png');
   const router = useRouter();
 
   useEffect(() => {
@@ -31,6 +33,25 @@ export default function Header() {
     }
   }, []);
 
+  useEffect(()=>{
+      const fetchAll = async() => {
+          
+          const avatar= await fetchProfile(user.userId);
+          
+          
+          if(avatar=== "No profile"){
+              router.push("create-profile");
+          }else{
+              setAvatar(avatar.avatarImage);
+          }
+      }
+
+      if(user){
+          fetchAll();
+      }
+
+  },[user]);
+
   return (
     <div className="flex bg-white justify-center items-center w-full h-[56px]">
       <div className="w-[90%] flex justify-between">
@@ -40,7 +61,7 @@ export default function Header() {
         </div>
         <DropdownMenu>
           <DropdownMenuTrigger className="w-[40px] h-[40px] border rounded-full">
-            <img src="./coffee-bean.png" className="w-full h-full object-cover"/>
+            <img src={avatar} className="w-full h-full object-cover"/>
           </DropdownMenuTrigger>
           <DropdownMenuContent className="flex flex-col items-center">
           <DropdownMenuLabel>{user?.username}</DropdownMenuLabel>

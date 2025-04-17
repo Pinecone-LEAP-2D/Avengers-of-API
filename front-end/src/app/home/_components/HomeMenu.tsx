@@ -13,7 +13,6 @@ import {
 import { useRouter } from "next/navigation";
 import jwt from "jsonwebtoken";
 import { fetchProfile } from "@/lib/fetchProfile";
-import CoffeeLoading from "@/components/CoffeeLoading";
 
 export default function HomeMenu(){
 
@@ -51,13 +50,13 @@ export default function HomeMenu(){
             
             
             if(profile === "No profile"){
-                // router.push("create-profile");
+                router.push("create-profile");
             }else{
                 setProfile(profile);
             }
         }
 
-        if(user){
+        if(user.userId !== undefined){
             fetchAll();
         }
 
