@@ -1,4 +1,3 @@
-// context/ProfileContext.tsx
 "use client";
 
 import React, { createContext, useContext, useEffect, useState } from "react";
@@ -33,12 +32,14 @@ export const ProfileProvider = ({
   const [isLoading, setIsLoading] = useState(false);
 
   const fetchProfile = async () => {
-    if (!user?.id) return;
     setIsLoading(true);
     try {
-      const res = await fetch(`http://localhost:3000/profile/${user.id}`);
+      if (!user?.id) return;
+      const res = await fetch(
+        `http://localhost:3000/profile?userId=${user.id}`
+      );
       const data = await res.json();
-      setProfile(data);
+      setProfile(data.profile);
     } catch (err) {
       console.error("Error fetching profile:", err);
     } finally {
@@ -65,7 +66,7 @@ export const ProfileProvider = ({
   };
 
   useEffect(() => {
-    if (user?.id) fetchProfile();
+    fetchProfile();
   }, [user]);
 
   return (
