@@ -12,7 +12,7 @@ export const GetDonationController = async (req: Request, res: Response) => {
   try {
     const donations = await prisma.donation.findMany({
       where: {
-        donorId: parseInt(userId),
+        recipientId: parseInt(userId),
       },
       select: {
         recipient: {

@@ -8,8 +8,7 @@ import {
   Dialog,
   DialogContent,
   DialogTitle,
-  DialogTrigger,
-  DialogClose,
+  DialogTrigger
 } from "@/components/ui/dialog";
 import { QRCodeCanvas } from "qrcode.react";
 import axios from "axios";
@@ -39,6 +38,7 @@ export default function User() {
     link: "",
     message: "",
   })
+  const [donations, setDonations] = useState([]); 
 
 
   const params = useParams();
@@ -54,7 +54,7 @@ export default function User() {
         const response = await axios.get(`http://localhost:3000/user/?username=${userID}`);
         const userid = response.data.id;
         const profile = await fetchProfile(userid);
-        console.log(profile);
+        fetchDonations(userid);
         if(typeof profile == "string" || profile === undefined){
           setNotFound(true);
         }else{
@@ -65,6 +65,17 @@ export default function User() {
         setNotFound(true);
       }
     }
+
+    const fetchDonations = async(id:Number) => {
+      try{
+        const res = await axios.get(`http://localhost:3000/donation?userId=${id}`);
+        const donations = res.data.donations;
+        setDonations(donations);
+      }catch(err){
+        console.log(err);
+      }
+    }
+    
 
     if(typeof window !== undefined){
       const token = window.localStorage.token;
@@ -78,9 +89,10 @@ export default function User() {
       setOrigin(window.location.origin);
 
     }
-    
+
     fetchAll()
   },[]);
+  
 
   const changeCoffeeAmount = (e: React.ChangeEvent<HTMLInputElement>) => {
     
@@ -110,8 +122,8 @@ export default function User() {
     try{
       const res = await axios.post("http://localhost:3000/donation",{
         amount: coffeeCount ? coffeeCount : 1,
-        specialMessage: "Hi",
-        socialURLOrBuyMeACoffee: `${origin}/user/${user.username}`,
+        specialMessage: input.message ? input.message : "",
+        socialURLOrBuyMeACoffee: input.link ? input.link : `${origin}/user/${user.username}`,
         donorId: user.userId,
         recipientId: profile.userId
       });
@@ -122,6 +134,14 @@ export default function User() {
     }
   }
 
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    setInput(prev => ({
+      ...prev,
+      [e.target.name]: e.target.value
+    }))
+  }
+
+  
 
   return notFound ? (
     <NotFound />
@@ -166,9 +186,13 @@ export default function User() {
               <div className="font-semibold pb-[10px] text-[19px]">
                 Recent supporters
               </div>
-              <div className="flex flex-col">
-                {/* {user.recents.length ? (
-                  user.recents.map((el, index) => <div key={index}>{el}</div>)
+              <div className="flex flex-col gap-[10px]">
+                {donations.length ? (
+                  donations.map((el, index) => 
+                  <div key={index} className="p-[10px] w-full h-fit border rounded-[5px] bg-gray-100">
+                    <div><a href={el.donor.username} className="font-semibold">{el.donor.username}</a> bought ${el.amount} coffee</div>
+                    <div>{el.specialMessage}</div>
+                  </div>)
                 ) : (
                   <div className="w-full h-[160px] mt-[15px] border border-gray-300 rounded-[8px] flex justify-center items-center">
                     <div className="flex flex-col items-center gap-[20px]">
@@ -178,7 +202,7 @@ export default function User() {
                       </div>
                     </div>
                   </div>
-                )} */}
+                )}
               </div>
             </div>
           </div>
@@ -240,6 +264,9 @@ export default function User() {
             <input
               type="text"
               placeholder="buymeacoffee.com/"
+              onChange={handleInputChange}
+              value={input.link}
+              name="link"
               className="outline-none border border-gray-300 px-[10px] w-full h-[35px] rounded-[5px] focus:border-orange-400"
             />
           </div>
@@ -248,6 +275,9 @@ export default function User() {
             <textarea
               className="outline-none border rounded-[5px] resize-none h-fit min-h-[140px] p-[10px] border-gray-300 focus:border-orange-400"
               placeholder={`Send your special thanks to ${profile.name}`}
+              onChange={handleInputChange}
+              value={input.message}
+              name="message"
             />
           </div>
           <div className="mt-[20px] flex gap-[5px] items-center">
