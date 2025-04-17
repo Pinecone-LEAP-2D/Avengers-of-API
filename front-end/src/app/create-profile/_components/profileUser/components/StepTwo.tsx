@@ -121,7 +121,7 @@ export const StepTwoProfileEdit = () => {
         <Button
           onClick={() => {
             localStorage.removeItem("step");
-            router.push("/finish");
+            router.push("/home");
           }}
         >
           Finish
