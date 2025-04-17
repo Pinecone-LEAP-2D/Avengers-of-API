@@ -1,13 +1,8 @@
 "use client";
 
-"use client";
-
 import { Coffee } from "lucide-react";
-import jwt from "jsonwebtoken";
-import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { useProfile } from "@/context/ProfileContext";
-
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -16,44 +11,9 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 
-type User = {
-  email: string;
-  username: string;
-};
-
 export default function Header() {
-  const [user, setUser] = useState<User | null>(null);
   const { profile } = useProfile();
-
-  useEffect(() => {
-    if (typeof window !== "undefined") {
-      const token = window.localStorage.token;
-      if (token) {
-        const decoded = jwt.decode(token) as User | null;
-        setUser(decoded);
-      }
-    }
-  }, []);
-  console.log("user", profile);
-
-  useEffect(()=>{
-      const fetchAll = async() => {
-          
-          const avatar= await fetchProfile(user.userId);
-          
-          
-          if(avatar=== "No profile"){
-              router.push("create-profile");
-          }else{
-              setAvatar(avatar.avatarImage);
-          }
-      }
-
-      if(user){
-          fetchAll();
-      }
-
-  },[user]);
+  const router = useRouter();
 
   return (
     <div className="flex bg-white justify-center items-center w-full h-[56px]">
@@ -71,7 +31,7 @@ export default function Header() {
             />
           </DropdownMenuTrigger>
           <DropdownMenuContent className="flex flex-col items-center">
-            <DropdownMenuLabel>{user?.username}</DropdownMenuLabel>
+            <DropdownMenuLabel>{profile?.name}</DropdownMenuLabel>
             <DropdownMenuItem>
               <div
                 className="cursor-pointer"
