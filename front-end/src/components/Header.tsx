@@ -1,5 +1,7 @@
 "use client";
 
+"use client";
+
 import { Coffee } from "lucide-react";
 import jwt from "jsonwebtoken";
 import { useEffect, useState } from "react";
