@@ -3,14 +3,16 @@
 import { Coffee } from "lucide-react";
 import jwt from "jsonwebtoken";
 import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
+import { useProfile } from "@/context/ProfileContext";
+
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuLabel,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
-import { useRouter } from "next/navigation";
+} from "@/components/ui/dropdown-menu";
 
 type User = {
   email: string;
@@ -19,6 +21,7 @@ type User = {
 
 export default function Header() {
   const [user, setUser] = useState<User | null>(null);
+  const { profile } = useProfile();
   const router = useRouter();
 
   useEffect(() => {
@@ -30,6 +33,7 @@ export default function Header() {
       }
     }
   }, []);
+  console.log("user", profile);
 
   return (
     <div className="flex bg-white justify-center items-center w-full h-[56px]">
@@ -39,14 +43,25 @@ export default function Header() {
           <h2 className=" font-bold">Buy Me Coffee</h2>
         </div>
         <DropdownMenu>
-          <DropdownMenuTrigger className="w-[40px] h-[40px] border rounded-full">
-            <img src="./coffee-bean.png" className="w-full h-full object-cover"/>
+          <DropdownMenuTrigger className="w-[40px] h-[40px] border rounded-full overflow-hidden">
+            <img
+              src={profile?.avatarImage || "/default-avatar.png"}
+              alt="Profile"
+              className="w-full h-full object-cover"
+            />
           </DropdownMenuTrigger>
           <DropdownMenuContent className="flex flex-col items-center">
-          <DropdownMenuLabel>{user?.username}</DropdownMenuLabel>
-          <DropdownMenuItem>
-            <div className="cursor-pointer" onClick={()=>{router.push("../login")}}>Log out</div>
-          </DropdownMenuItem>
+            <DropdownMenuLabel>{user?.username}</DropdownMenuLabel>
+            <DropdownMenuItem>
+              <div
+                className="cursor-pointer"
+                onClick={() => {
+                  router.push("../login");
+                }}
+              >
+                Log out
+              </div>
+            </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
       </div>
