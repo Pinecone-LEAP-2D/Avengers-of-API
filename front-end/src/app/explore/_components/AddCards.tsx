@@ -19,7 +19,7 @@ export const AddCards = ({
   avatarImage,
 }: UserCardProps) => {
   return (
-    <Card className="p-4 border border-gray-200 rounded-lg hover:shadow-md transition-shadow duration-200">
+    <Card className="p-4 border w-full border-gray-200 rounded-lg hover:shadow-md transition-shadow duration-200">
       <div className="flex items-start justify-between">
         {/* Left: Avatar and Info */}
         <div className="flex gap-4">
@@ -53,9 +53,9 @@ export const AddCards = ({
 
       {/* Description + Social */}
       <CardContent className="mt-4 grid grid-cols-1 md:grid-cols-2 gap-4">
-        <div className="flex flex-col gap-2">
+        <div className="flex flex-col gap-2 w-[420px]">
           <p className="text-lg font-semibold">About {username}</p>
-          <p className="text-sm">{about}</p>
+          <p className="text-sm flex text-wrap line-clamp-3">{about}</p>
         </div>
         <div>
           <p className="font-medium text-sm mb-1">Social media URL</p>
