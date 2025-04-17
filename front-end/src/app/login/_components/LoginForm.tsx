@@ -11,6 +11,7 @@ import axios from "axios";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { fetchProfile } from "@/lib/fetchProfile";
+import { useAuth } from "@/context/AuthContext";
 
 const LoginSchema = Yup.object().shape({
   email: Yup.string()
@@ -24,6 +25,8 @@ const LoginSchema = Yup.object().shape({
 export default function LoginPage() {
   const [error, setError] = useState<String | null>(null);
   const router = useRouter();
+  const { setUser } = useAuth();
+
   return (
     <div className="flex h-screen">
       <div className="w-1/2 bg-amber-400 flex flex-col justify-between p-10">
@@ -71,6 +74,18 @@ export default function LoginPage() {
                 );
                 if (response.status === 200) {
                   localStorage.setItem("token", response.data.token);
+                  setUser({
+                    id: response.data.user.id,
+                    email: response.data.user.email,
+                    username: response.data.user.username,
+                  });
+
+                  // console.log("User set in context:", {
+                  //   id: response.data.user.id,
+                  //   email: response.data.user.email,
+                  //   username: response.data.user.username,
+                  // });
+
                   const res = await fetchProfile(response.data.user.id);
                   if (res === "No profile") {
                     router.push("create-profile");

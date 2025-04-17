@@ -22,17 +22,17 @@ export default function Settings() {
               </div>
             </div>
           </div>
-          <div className="mt-6 g-white rounded-lg border border-gray-200 overflow-hidden">
+          <div className="mt-5 g-white rounded-lg border border-gray-200 overflow-hidden">
             <div className="p-5">
               <SetNewPasswordForm />
             </div>
           </div>
-          <div className="mt-6 g-white rounded-lg border border-gray-200 overflow-hidden">
+          <div className="mt-5 g-white rounded-lg border border-gray-200 overflow-hidden">
             <div className="p-5">
               <BankCardForm />
             </div>
           </div>
-          <div className="mt-6 g-white rounded-lg border border-gray-200 overflow-hidden">
+          <div className="mt-5 g-white rounded-lg border border-gray-200 overflow-hidden">
             <div className="p-5">
               <SuccessPage />
             </div>
