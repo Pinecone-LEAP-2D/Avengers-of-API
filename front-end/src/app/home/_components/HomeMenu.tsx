@@ -13,7 +13,6 @@ import {
 import { useRouter } from "next/navigation";
 import jwt from "jsonwebtoken";
 import { fetchProfile } from "@/lib/fetchProfile";
-import CoffeeLoading from "@/components/CoffeeLoading";
 
 export default function HomeMenu() {
   const [user, setUser] = useState({});

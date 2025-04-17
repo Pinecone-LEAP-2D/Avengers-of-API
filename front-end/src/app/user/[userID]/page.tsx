@@ -1,7 +1,7 @@
 "use client";
 
 import { useParams, useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { use, useEffect, useState } from "react";
 import { Heart, Coffee } from "lucide-react";
 import Header from "@/components/Header";
 import {
@@ -33,6 +33,12 @@ export default function User() {
   const [isMonthly, setIsMonthly] = useState(false);
   const [notFound, setNotFound] = useState(false);
   const [isLoading, setLoading] = useState(true);
+  const [origin, setOrigin] = useState("");
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const [input, setInput] = useState({
+    link: "",
+    message: "",
+  })
 
 
   const params = useParams();
@@ -68,6 +74,9 @@ export default function User() {
       }else{
         router.push("login");
       }
+
+      setOrigin(window.location.origin);
+
     }
     
     fetchAll()
@@ -92,6 +101,26 @@ export default function User() {
   const changeToMonthly = (e: React.ChangeEvent<HTMLInputElement>) => {
     setIsMonthly(e.target.checked);
   };
+
+  const handleSend = async() => {
+    
+    console.log(user.userId, profile.userId);
+    
+
+    try{
+      const res = await axios.post("http://localhost:3000/donation",{
+        amount: coffeeCount ? coffeeCount : 1,
+        specialMessage: "Hi",
+        socialURLOrBuyMeACoffee: `${origin}/user/${user.username}`,
+        donorId: user.userId,
+        recipientId: profile.userId
+      });
+      console.log(res);
+      setIsDialogOpen(false);
+    }catch(err){
+      console.log(err);
+    }
+  }
 
 
   return notFound ? (
@@ -206,11 +235,11 @@ export default function User() {
           </div>
           <div className="mt-[40px] flex flex-col gap-[12px]">
             <div className="text-[18px] font-semibold">
-              Enter your name to donate
+              Enter buyMeCoffee or social account URL:
             </div>
             <input
               type="text"
-              placeholder="Leave blank to use your username"
+              placeholder="buymeacoffee.com/"
               className="outline-none border border-gray-300 px-[10px] w-full h-[35px] rounded-[5px] focus:border-orange-400"
             />
           </div>
@@ -256,7 +285,7 @@ export default function User() {
             </div>
             <div>Make this monthly</div>
           </div>
-          <Dialog>
+          <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
             <DialogTrigger asChild>
               <button
                 className={`text-white rounded-full w-full h-[40px] font-semibold mt-[20px] ${user.userId === profile.userId ? "bg-gray-400/50 cursor-not-allowed" : "bg-orange-400"}`}
@@ -283,7 +312,7 @@ export default function User() {
                 value="https://www.streamhub.com/wasteland7"
                 size={200}
               />
-              <button className="border px-[30px] py-[5px] bg-black text-white rounded-[10px] text-[20px]">Send</button>
+              <button className="border px-[30px] py-[5px] bg-black text-white rounded-[10px] text-[18px]" onClick={()=>handleSend()}>Send</button>
             </DialogContent>
           </Dialog>
         </div>

@@ -1,5 +1,7 @@
 "use client";
 
+"use client";
+
 import { Coffee } from "lucide-react";
 import jwt from "jsonwebtoken";
 import { useEffect, useState } from "react";
@@ -22,7 +24,6 @@ type User = {
 export default function Header() {
   const [user, setUser] = useState<User | null>(null);
   const { profile } = useProfile();
-  const router = useRouter();
 
   useEffect(() => {
     if (typeof window !== "undefined") {
@@ -34,6 +35,25 @@ export default function Header() {
     }
   }, []);
   console.log("user", profile);
+
+  useEffect(()=>{
+      const fetchAll = async() => {
+          
+          const avatar= await fetchProfile(user.userId);
+          
+          
+          if(avatar=== "No profile"){
+              router.push("create-profile");
+          }else{
+              setAvatar(avatar.avatarImage);
+          }
+      }
+
+      if(user){
+          fetchAll();
+      }
+
+  },[user]);
 
   return (
     <div className="flex bg-white justify-center items-center w-full h-[56px]">

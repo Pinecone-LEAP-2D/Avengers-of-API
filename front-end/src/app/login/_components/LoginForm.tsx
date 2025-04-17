@@ -88,7 +88,7 @@ export default function LoginPage() {
 
                   const res = await fetchProfile(response.data.user.id);
                   if (res === "No profile") {
-                    router.push("create-profile");
+                    // router.push("create-profile");
                   } else {
                     router.push("home");
                   }
