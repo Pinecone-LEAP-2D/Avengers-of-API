@@ -18,10 +18,12 @@ export default function Header() {
   return (
     <div className="flex bg-white justify-center items-center w-full h-[56px]">
       <div className="w-[90%] flex justify-between">
+          <a href="../home">
         <div className="flex items-center gap-2">
-          <Coffee />
-          <h2 className=" font-bold">Buy Me Coffee</h2>
+            <Coffee />
+            <h2 className=" font-bold">Buy Me Coffee</h2>
         </div>
+          </a>
         <DropdownMenu>
           <DropdownMenuTrigger className="w-[40px] h-[40px] border rounded-full overflow-hidden">
             <img
