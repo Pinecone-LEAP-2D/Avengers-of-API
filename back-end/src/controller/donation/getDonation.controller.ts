@@ -28,12 +28,6 @@ export const GetDonationController = async (req: Request, res: Response) => {
             id: true,
             username: true,
             email: true,
-            profile : {
-              select : {
-                name : true,
-                avatarImage : true
-              }
-            }
           },
         },
         specialMessage: true,

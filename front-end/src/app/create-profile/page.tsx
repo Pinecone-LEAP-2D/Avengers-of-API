@@ -7,7 +7,7 @@ import { fetchProfile } from "@/lib/fetchProfile";
 import jwt from "jsonwebtoken";
 import { useRouter } from "next/navigation";
 
-export default function Home () {
+export const Home = () => {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(true);
 
@@ -44,3 +44,5 @@ export default function Home () {
     return <ProfileUser />;
   }
 };
+
+export default Home;
