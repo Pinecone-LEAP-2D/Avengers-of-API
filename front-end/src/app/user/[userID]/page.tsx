@@ -8,7 +8,7 @@ import {
   Dialog,
   DialogContent,
   DialogTitle,
-  DialogTrigger
+  DialogTrigger,
 } from "@/components/ui/dialog";
 import { QRCodeCanvas } from "qrcode.react";
 import axios from "axios";
@@ -19,13 +19,16 @@ import NotFound from "@/components/NotFound";
 import jwt, { JwtPayload } from "jsonwebtoken";
 
 export default function User() {
-  const [user, setUser] = useState({});
+  const [user, setUser] = useState({
+    userId: 0,
+    username: ""
+  });
   const [profile, setProfile] = useState({
-    name: '',
-    about: '',
-    socialMediaURL: '',
-    backgroundImage: '',
-    avatarImage: '',
+    name: "",
+    about: "",
+    socialMediaURL: "",
+    backgroundImage: "",
+    avatarImage: "",
     userId: 0,
   });
   const [coffeeCount, setCoffeeCount] = useState(0);
@@ -37,111 +40,110 @@ export default function User() {
   const [input, setInput] = useState({
     link: "",
     message: "",
-  })
-  const [donations, setDonations] = useState([]); 
-
-
+  });
+  const [donations, setDonations] = useState([]);
   const params = useParams();
   const { userID } = params;
   const router = useRouter();
 
-
-
-  useEffect(()=>{
-    
-    const fetchAll = async() => {
-      try{
-        const response = await axios.get(`http://localhost:3000/user/?username=${userID}`);
+  useEffect(() => {
+    const fetchAll = async () => {
+      try {
+        const response = await axios.get(
+          `http://localhost:3000/user/?username=${userID}`
+        );
         const userid = response.data.id;
         const profile = await fetchProfile(userid);
         fetchDonations(userid);
-        if(typeof profile == "string" || profile === undefined){
+        if (typeof profile == "string" || profile === undefined) {
           setNotFound(true);
-        }else{
+        } else {
           setLoading(false);
           setProfile(profile);
         }
-      }catch(err){
+      } catch (err) {
         setNotFound(true);
       }
-    }
+    };
 
-    const fetchDonations = async(id:Number) => {
-      try{
-        const res = await axios.get(`http://localhost:3000/donation?userId=${id}`);
+    const fetchDonations = async (id: Number) => {
+      try {
+        const res = await axios.get(
+          `http://localhost:3000/donation?userId=${id}`
+        );
         const donations = res.data.donations;
         setDonations(donations);
-      }catch(err){
+      } catch (err) {
         console.log(err);
       }
-    }
-    
+    };
 
-    if(typeof window !== undefined){
+    if (typeof window !== undefined) {
       const token = window.localStorage.token;
-      if(token){
-        const decode = jwt.decode(token) as JwtPayload;
-        setUser(decode);
-      }else{
-        router.push("login");
+      if (token) {
+        const decode = jwt.decode(token);
+        
+        if (decode && typeof decode !== 'string' && 'userId' in decode && 'username' in decode) {
+          setUser(decode as { userId: number; username: string });
+        } else {
+          router.push("login");
+        }
       }
-
       setOrigin(window.location.origin);
-
+    
     }
 
-    fetchAll()
-  },[]);
-  
+    fetchAll();
+  }, []);
+
+  console.log(donations);
 
   const changeCoffeeAmount = (e: React.ChangeEvent<HTMLInputElement>) => {
-    
-    if(Number(e.target.value) < 0){
+    if (Number(e.target.value) < 0) {
       setCoffeeCount(0);
-    }else if(Number(e.target.value) > 50000){
-    }else
-    setCoffeeCount(Number(e.target.value));
+    } else if (Number(e.target.value) > 50000) {
+    } else setCoffeeCount(Number(e.target.value));
   };
   const handleCoffeeKey = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    const disallowedKeys = ['e', 'E', '+', '-', '.'];
+    const disallowedKeys = ["e", "E", "+", "-", "."];
 
     if (disallowedKeys.includes(e.key)) {
       e.preventDefault();
       return;
     }
-  }
+  };
   const changeToMonthly = (e: React.ChangeEvent<HTMLInputElement>) => {
     setIsMonthly(e.target.checked);
   };
 
-  const handleSend = async() => {
-    
+  const handleSend = async () => {
     console.log(user.userId, profile.userId);
-    
 
-    try{
-      const res = await axios.post("http://localhost:3000/donation",{
+    try {
+      const res = await axios.post("http://localhost:3000/donation", {
         amount: coffeeCount ? coffeeCount : 1,
-        specialMessage: input.message ? input.message : "",
-        socialURLOrBuyMeACoffee: input.link ? input.link : `${origin}/user/${user.username}`,
+        specialMessage: input.message ? input.message : " ",
+        socialURLOrBuyMeACoffee: input.link
+          ? input.link
+          : `${origin}/user/${user.username}`,
         donorId: user.userId,
-        recipientId: profile.userId
+        recipientId: profile.userId,
       });
       console.log(res);
       setIsDialogOpen(false);
-    }catch(err){
+    } catch (err) {
       console.log(err);
     }
-  }
+  };
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    setInput(prev => ({
+  const handleInputChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
+    setInput((prev) => ({
       ...prev,
-      [e.target.name]: e.target.value
-    }))
-  }
-
-  
+      [e.target.name]: e.target.value,
+    }));
+  };
 
   return notFound ? (
     <NotFound />
@@ -152,7 +154,10 @@ export default function User() {
       <Header />
       <div className="w-screen h-[40vh]">
         {profile.backgroundImage ? (
-          <img src={profile.backgroundImage} className="w-full h-full object-cover" />
+          <img
+            src={profile.backgroundImage}
+            className="w-full h-full object-cover"
+          />
         ) : (
           <div className="w-full h-full bg-gray-700"></div>
         )}
@@ -162,7 +167,10 @@ export default function User() {
           <div className="bg-white rounded-[20px] h-fit p-[25px]">
             <div className="flex gap-[15px] items-center border-b-[.5px] border-[#DDDDDD] pb-[20px]">
               <div className="w-[30px] h-[30px] rounded-full overflow-hidden">
-                <img src={profile.avatarImage} className="w-full h-full object-cover" />
+                <img
+                  src={profile.avatarImage}
+                  className="w-full h-full object-cover"
+                />
               </div>
               <div className="text-[22px] font-semibold">{profile.name}</div>
             </div>
@@ -178,7 +186,16 @@ export default function User() {
               <div className="font-semibold pb-[10px] text-[19px]">
                 Social media URL
               </div>
-              <Link href={profile.socialMediaURL.startsWith("https://") ? profile.socialMediaURL : "https://"+profile.socialMediaURL} target="_blank">{profile.socialMediaURL}</Link>
+              <Link
+                href={
+                  profile.socialMediaURL.startsWith("https://")
+                    ? profile.socialMediaURL
+                    : "https://" + profile.socialMediaURL
+                }
+                target="_blank"
+              >
+                {profile.socialMediaURL}
+              </Link>
             </div>
           </div>
           <div className="bg-white rounded-[20px] h-fit p-[20px]">
@@ -188,11 +205,28 @@ export default function User() {
               </div>
               <div className="flex flex-col gap-[10px]">
                 {donations.length ? (
-                  donations.map((el, index) => 
-                  <div key={index} className="p-[10px] w-full h-fit border rounded-[5px] bg-gray-100">
-                    <div><a href={el.donor.username} className="font-semibold">{el.donor.username}</a> bought ${el.amount} coffee</div>
-                    <div>{el.specialMessage}</div>
-                  </div>)
+                  donations.map((el, index) => (
+                    <div
+                      key={index}
+                      className="py-[10px] px-[5px] gap-[10px] w-full h-fit border rounded-[5px] bg-gray-100 flex items-center"
+                    >
+                      <div>
+                        <img
+                          className="w-[40px] h-[40px]"
+                          src={el.donor.profile.avatarImage}
+                        />
+                      </div>
+                      <div>
+                        <div>
+                          <a href={el.donor.profile.name} className="font-semibold">
+                            {el.donor.username}
+                          </a>{" "}
+                          bought ${el.amount} coffee
+                        </div>
+                        <div>{el.specialMessage}</div>
+                      </div>
+                    </div>
+                  ))
                 ) : (
                   <div className="w-full h-[160px] mt-[15px] border border-gray-300 rounded-[8px] flex justify-center items-center">
                     <div className="flex flex-col items-center gap-[20px]">
@@ -213,7 +247,7 @@ export default function User() {
           </div>
           <div className="mt-[25px] w-full flex flex-col items-center justify-center border border-orange-400 py-[10px] rounded-[10px] bg-orange-100/20">
             <div className="flex items-center gap-[20px]">
-              <Coffee className="w-[40px] h-[40px]" />
+              <Coffee className="w-[20px] h-[20px]" />
               <div className="text-[20px] font-semibold text-gray-300">x</div>
               <div
                 className={`text-[20px] flex items-center justify-center font-semibold border hover:border-orange-400 rounded-full w-[50px] h-[50px] cursor-pointer ${
@@ -251,7 +285,7 @@ export default function User() {
                 max={50000}
                 className="w-[50px] h-[50px] outline-none border rounded-[12px] border-gray-300 text-center text-[24px] font-semibold coffeeInput"
                 placeholder="10"
-                value={coffeeCount > 0 ? coffeeCount : "" }
+                value={coffeeCount > 0 ? coffeeCount : ""}
                 onChange={changeCoffeeAmount}
                 onKeyDown={handleCoffeeKey}
               />
@@ -318,7 +352,11 @@ export default function User() {
           <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
             <DialogTrigger asChild>
               <button
-                className={`text-white rounded-full w-full h-[40px] font-semibold mt-[20px] ${user.userId === profile.userId ? "bg-gray-400/50 cursor-not-allowed" : "bg-orange-400"}`}
+                className={`text-white rounded-full w-full h-[40px] font-semibold mt-[20px] ${
+                  user.userId === profile.userId
+                    ? "bg-gray-400/50 cursor-not-allowed"
+                    : "bg-orange-400"
+                }`}
                 disabled={user.userId === profile.userId}
               >
                 Support ${coffeeCount === 0 ? 1 : coffeeCount}
@@ -342,7 +380,12 @@ export default function User() {
                 value="https://www.streamhub.com/wasteland7"
                 size={200}
               />
-              <button className="border px-[30px] py-[5px] bg-black text-white rounded-[10px] text-[18px]" onClick={()=>handleSend()}>Send</button>
+              <button
+                className="border px-[30px] py-[5px] bg-black text-white rounded-[10px] text-[18px]"
+                onClick={() => handleSend()}
+              >
+                Send
+              </button>
             </DialogContent>
           </Dialog>
         </div>

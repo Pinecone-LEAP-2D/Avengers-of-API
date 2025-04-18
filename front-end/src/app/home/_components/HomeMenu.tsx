@@ -15,7 +15,10 @@ import jwt from "jsonwebtoken";
 import { fetchProfile } from "@/lib/fetchProfile";
 
 export default function HomeMenu() {
-  const [user, setUser] = useState({});
+  const [user, setUser] = useState({
+    userId: 0,
+    username: ""
+  });
   const [profile, setProfile] = useState({
     name: "",
     about: "",
@@ -33,9 +36,11 @@ export default function HomeMenu() {
       const token = window.localStorage.token;
       if (token) {
         const decode = jwt.decode(token);
-        if (decode) setUser(decode);
-      } else {
-        router.push("login");
+        if (decode && typeof decode !== 'string' && 'userId' in decode && 'username' in decode) {
+          setUser(decode as { userId: number; username: string });
+        } else {
+          router.push("login");
+        }
       }
     }
   }, []);
